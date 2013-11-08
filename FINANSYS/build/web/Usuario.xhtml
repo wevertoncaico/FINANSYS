@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Cadastro de Usuario</title>
+    </h:head>
+
+    <h:body>
+        <center>
+            <p:graphicImage value="/imagem/FINANSYS2.png"/>
+        </center>
+        <h:form></h:form>
+
+        <h:form id="formCadUsuarios">
+            <p:panel header="Manutenção de Usuarios">
+
+                <h:inputHidden value="#{usuarioMB.u.id}"/>
+                <h:panelGrid columns="3">
+                    <h:outputText value="Nome: *"/>
+                    <p:inputText id="campoNome" value="#{usuarioMB.u.nome}" required="true" requiredMessage="Campo obrigatório"/>
+                    <p:message for="campoNome"/>
+
+                    <h:outputText value="Login: *"/>
+                    <p:inputText id="campoLogin" value="#{usuarioMB.u.login}" required="true" requiredMessage="Campo obrigatório"/>
+                    <p:message for="campoLogin"/>
+
+                    <h:outputText value="Senha: *"/>
+                    <p:password id="campoSenha" value="#{usuarioMB.u.senha}" required="true" requiredMessage="Campo obrigatório"/>
+                    <p:message for="campoSenha"/>
+                </h:panelGrid>
+
+                <br/>
+                <h:outputText value="* representa que os campos são obrigatórios"/>
+                <br/>
+                <br/>
+                <p:commandButton value="Cadastrar" action="#{usuarioMB.cadastrar()}" ajax="false"/>
+                <p:commandButton value="Alterar" action="#{usuarioMB.alterar()}" ajax="false"/>
+
+                <h:form id="limpar">
+                    <p:commandButton value="Limpar" action="#{usuarioMB.limpar()}" ajax="false"/>
+                </h:form>
+
+                <p:messages for="formCadUsuarios"/>
+            </p:panel>
+        </h:form>
+
+
+        <h:form id="formPesquisa">
+            <p:panel id="formPanelPesquisa" header="Pesquisar Usuario">
+                <h:panelGrid columns="3">
+                    <h:outputLabel value="Nome:*"/>
+                    <p:inputText size="40" id="nomeDoUsuario" style="text-transform: lowercase" maxlength="30" value ="#{usuarioMB.pesquisa}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="nomeDoUsuario"/>
+                </h:panelGrid>
+                <p:commandButton ajax="false" value="Pesquisar" action="#{usuarioMB.pesquisarNome()}" image="ui-icon-search" update="formPesquisa, :tabela, :formCadUsuarios"/>
+            </p:panel>
+        </h:form> 
+
+
+        <h:form id="tabela">
+            <p:dataTable id="dataTable" var="c" emptyMessage="Nenhum Usuário cadastrado" value="#{usuarioMB.listaUsuario}" paginator="true" rows="5"  
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                         rowsPerPageTemplate="5,10,15,20,25">
+                <f:facet name="header">  
+                    <h:outputText value="Todos os Usuários" /> 
+                </f:facet>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Id" />
+                    </f:facet>
+                    <p:commandLink value="#{c.id}" update=":formCadUsuarios">
+                        <f:setPropertyActionListener value="#{c}" target="#{UsuarioMB.u}"/> 
+                    </p:commandLink>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Nome" />
+                    </f:facet>
+                    <p:commandLink  id="tabNome" ajax="false" value="#{c.nome}" update=":formCadUsuarios">
+                        <f:setPropertyActionListener value="#{c}" target="#{usuarioMB.u}"/> 
+                        <h:outputText value="${c.nome}"/>
+                    </p:commandLink>
+                </p:column>
+                <p:column >  
+                    <f:facet name="header">
+                        <h:outputText value="Login" />   
+                    </f:facet>
+                    <p:commandLink id="tabLogin" ajax="false" value="#{c.login}" update=":formCadUsuarios">
+                        <f:setPropertyActionListener value="#{c}" target="#{usuarioMB.u}"/> 
+                        <h:outputText value="${c.login}"/>
+                    </p:commandLink>
+                </p:column>
+                <p:column >  
+                    <f:facet name="header">
+                        <h:outputText value="Senha" />   
+                    </f:facet>   
+                    <p:commandLink id="TabSenha" ajax="false" value="#{c.senha}" update=":formCadUsuarios">
+                        <f:setPropertyActionListener value="#{c}" target="#{usuarioMB.u}"/> 
+                        <h:outputText value="${c.senha}"/>
+                    </p:commandLink>
+                </p:column>
+
+                <p:column >  
+                    <f:facet name="header">
+                        <h:outputText value="Excluir" />   
+                    </f:facet>   
+                    <p:commandButton id="Tabexcluir" ajax="false" action="#{usuarioMB.excluir(c.id)}" image="ui-icon ui-icon-trash" update=":formCadUsuarios, :tabela"/>
+                </p:column>
+
+            </p:dataTable>
+        </h:form>
+        <br/>
+        <hr></hr>
+        <br/>
+        <h:form id="linguagem" >
+            <center>
+                <td> <h:commandButton image="/imagem/Brasil.png"/></td>
+                <td> <h:commandButton image="/imagem/EUA.png"/></td>
+            </center>
+        </h:form> 
+    </h:body>
+
+</html>
+

@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -23,7 +24,8 @@ public class Despesa implements Serializable {
     private Long id;
     private String descricao;
     private double valor;
-    private Date data;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date dat;
 
     public Long getId() {
         return id;
@@ -49,12 +51,18 @@ public class Despesa implements Serializable {
         this.valor = valor;
     }
 
-    public Date getData() {
-        return data;
+    /**
+     * @return the dat
+     */
+    public Date getDat() {
+        return dat;
     }
 
-    public void setData(Date data) {
-        this.data = data;
+    /**
+     * @param dat the dat to set
+     */
+    public void setDat(Date dat) {
+        this.dat = dat;
     }
 
     @Override
@@ -81,5 +89,5 @@ public class Despesa implements Serializable {
     public String toString() {
         return "modelo.Despesa[ id=" + id + " ]";
     }
-    
+
 }
