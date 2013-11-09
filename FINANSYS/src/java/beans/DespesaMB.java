@@ -3,6 +3,7 @@ package beans;
 import dao.DespesaJpaController;
 import dao.exceptions.NonexistentEntityException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,7 +26,7 @@ public class DespesaMB {
     private List<Despesa> listaDespesa = new ArrayList<Despesa>();
     private DespesaJpaController dao = new DespesaJpaController(EMF.getEntityManagerFactory());
     private String pesquisa;
-   
+    private Date pesData;
     
     public DespesaMB() {
         pesquisarAll();
@@ -80,7 +81,7 @@ public class DespesaMB {
     }
     
     public void pesquisarPorDescricao(){
-        listaDespesa = dao.pesquisarPorData(pesquisa);
+        listaDespesa = dao.pesquisarPorDescricao(pesquisa);
     }
 
     public void cadastrar() {
@@ -122,6 +123,33 @@ public class DespesaMB {
     public void limpar() {
        
         setD(new Despesa());
+    }
+
+    /**
+     * @return the pesData
+     */
+    public Date getPesData() {
+        return pesData;
+    }
+
+    /**
+     * @param pesData the pesData to set
+     */
+    public void setPesData(Date pesData) {
+        this.pesData = pesData;
+    }
+    
+    
+    
+     public void pesquisarData() {
+        listaDespesa = new ArrayList<Despesa>();
+        for (Despesa des : dao.findDespesaEntities()) {
+            if ((des.getDat().equals(pesData))){
+                   
+                listaDespesa.add(des);
+            }
+        }
+      setPesData(null);
     }
 
 }

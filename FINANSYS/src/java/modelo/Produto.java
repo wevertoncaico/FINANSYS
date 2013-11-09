@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package modelo;
 
 import java.io.Serializable;
@@ -22,6 +19,7 @@ public class Produto implements Serializable {
     private Long id;
     private String nome;
     private Double preco;
+    private Integer qntEstoque;
 
     public Long getId() {
         return id;
@@ -82,6 +80,20 @@ public class Produto implements Serializable {
      */
     public void setPreco(Double preco) {
         this.preco = preco;
+    }
+
+    /**
+     * @return the qntEstoque
+     */
+    public Integer getQntEstoque() {
+        return qntEstoque;
+    }
+
+    /**
+     * @param qntEstoque the qntEstoque to set
+     */
+    public void setQntEstoque(Integer qntEstoque) {
+        this.qntEstoque = qntEstoque;
     }
     
 }

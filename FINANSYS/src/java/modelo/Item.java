@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package modelo;
 
 import java.io.Serializable;
@@ -9,7 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -21,9 +19,10 @@ public class Item implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Double quantidade;
+    private Integer quantidade = 0;
     
-    @OneToOne
+    @ManyToOne
+    @JoinColumn
     private Produto produto;
 
     public Long getId() {
@@ -57,6 +56,39 @@ public class Item implements Serializable {
     @Override
     public String toString() {
         return "modelo.Item[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the quantidade
+     */
+    public Integer getQuantidade() {
+        return quantidade;
+    }
+
+    /**
+     * @param quantidade the quantidade to set
+     */
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    /**
+     * @return the produto
+     */
+    public Produto getProduto() {
+        return produto;
+    }
+
+    /**
+     * @param produto the produto to set
+     */
+    public void setProduto(Produto produto) {
+        this.produto = produto;
+    }
+    
+    public Double totalItem(){
+      return getProduto().getPreco()*quantidade;
+        
     }
     
 }

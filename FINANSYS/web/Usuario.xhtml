@@ -47,18 +47,22 @@
             </p:panel>
         </h:form>
 
+        <p:panel id="formPanelPesquisa" header="Pesquisar Usuario">
+            <h:form id="formPesquisa">
 
-        <h:form id="formPesquisa">
-            <p:panel id="formPanelPesquisa" header="Pesquisar Usuario">
                 <h:panelGrid columns="3">
                     <h:outputLabel value="Nome:*"/>
                     <p:inputText size="40" id="nomeDoUsuario" style="text-transform: lowercase" maxlength="30" value ="#{usuarioMB.pesquisa}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="nomeDoUsuario"/>
                 </h:panelGrid>
                 <p:commandButton ajax="false" value="Pesquisar" action="#{usuarioMB.pesquisarNome()}" image="ui-icon-search" update="formPesquisa, :tabela, :formCadUsuarios"/>
-            </p:panel>
-        </h:form> 
+            </h:form> 
+            <br/>
+            <h:form>
+                <p:commandButton ajax="false" value="Pesquisar Tudo" action="#{usuarioMB.pesquisarAll()}" image="ui-icon-search" update="formPesquisa, :tabela, :formCadUsuarios"/>
+            </h:form>
 
-
+        </p:panel>
+        
         <h:form id="tabela">
             <p:dataTable id="dataTable" var="c" emptyMessage="Nenhum Usuário cadastrado" value="#{usuarioMB.listaUsuario}" paginator="true" rows="5"  
                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  

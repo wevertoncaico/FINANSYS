@@ -136,10 +136,11 @@ public class DespesaJpaController implements Serializable {
         }
     }
     
-    public List<Despesa> pesquisarPorData(String descricao) {
+    public List<Despesa> pesquisarPorDescricao(String descricao) {
         EntityManager em = getEntityManager();
 
         TypedQuery<Despesa> q;
+     
         q = em.createQuery("select d from Despesa d where d.descricao like :descricao",Despesa.class);
         q.setParameter("descricao", "%" + descricao + "%");
         

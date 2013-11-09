@@ -28,7 +28,9 @@
                     <p:message for="campoValor"/>
 
                     <h:outputText value="Data: *"/>
-                    <p:calendar   id="campoData" pattern="dd/MM/yyyy" value="#{despesaMB.d.dat}" required="true" requiredMessage="Campo obrigatório"/>
+                    <p:calendar   id="campoData" value="#{despesaMB.d.dat}" required="true" requiredMessage="Campo obrigatório">
+
+                    </p:calendar>
                     <p:message for="campoData"/>
                 </h:panelGrid>
 
@@ -47,22 +49,43 @@
             </p:panel>
         </h:form>
 
+        <p:panel id="formPanelPesquisa" header="Pesquisar Despesa">
+            <h:form id="formPesquisa">
 
-        <h:form id="formPesquisa">
-            <p:panel id="formPanelPesquisa" header="Pesquisar Despesa">
                 <h:panelGrid columns="3">
                     <h:outputLabel value="Descrição:*"/>
                     <p:inputText id="pesquisar" style="text-transform: lowercase" maxlength="30" value ="#{despesaMB.pesquisa}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="pesquisar"/>
                 </h:panelGrid>
-                <p:commandButton ajax="false" value="Pesquisar" action="#{despesaMB.pesquisarPorDescricao()}" image="ui-icon-search" update="formPesquisa, :tabela, :formCadDespesas"/>
-            </p:panel>
-        </h:form> 
+                <p:commandButton ajax="false" value="Pesquisar" action="#{despesaMB.pesquisarPorDescricao()}" image="ui-icon-search" update=" formPesquisa, :tabela, :formCadDespesas"/>
+
+            </h:form> 
+            <br/>
+            <h:form>
+                <p:commandButton ajax="false" value="Pesquisar Tudo" action="#{despesaMB.pesquisarAll()}" image="ui-icon-search" update=" formPesquisa, :tabela, :formCadDespesas"/>
+            </h:form>
+        </p:panel>
+
+        <p:panel id="formPanelPesq" header="Pesquisar Despesa">
+            <h:form id="formPesq">
+
+                <h:panelGrid columns="3">
+                    <h:outputLabel value="Data*"/>
+                    <p:calendar id="pesquisarDa" style="text-transform: lowercase" maxlength="30" value ="#{despesaMB.pesData}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="pesquisarDa"/>
+                </h:panelGrid>
+                <p:commandButton ajax="false" value="Pesquisar" action="#{despesaMB.pesquisarData()}" image="ui-icon-search" update="formPesq, :tabela, :formCadDespesas"/>
+
+            </h:form> 
+            <br/>
+            <h:form>
+                <p:commandButton ajax="false" value="Pesquisar Tudo" action="#{despesaMB.pesquisarAll()}" image="ui-icon-search" update=" formPesquisa, :tabela, :formCadDespesas"/>
+            </h:form>
+        </p:panel>
 
 
         <h:form id="tabela">
             <p:dataTable   id="dataTable" var="d" emptyMessage="Nenhuma Despesa cadastrada" value="#{despesaMB.listaDespesa}" paginator="true" rows="5"  
-                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
-                         rowsPerPageTemplate="5,10,15,20,25,30,35">
+                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                           rowsPerPageTemplate="5,10,15,20,25,30,35">
                 <f:facet name="header">  
                     <h:outputText value="Todas as Despesas" /> 
                 </f:facet>
