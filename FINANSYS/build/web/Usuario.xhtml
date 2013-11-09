@@ -9,7 +9,9 @@
     </h:head>
 
     <h:body>
-
+        <center>
+            <p:graphicImage value="/imagem/FINANSYS2.png"/>
+        </center>
         <h:form></h:form>
 
         <h:form id="formCadUsuarios">
@@ -33,17 +35,18 @@
                 <br/>
                 <h:outputText value="* representa que os campos são obrigatórios"/>
                 <br/>
-
+                <br/>
                 <p:commandButton value="Cadastrar" action="#{usuarioMB.cadastrar()}" ajax="false"/>
                 <p:commandButton value="Alterar" action="#{usuarioMB.alterar()}" ajax="false"/>
+
+                <h:form id="limpar">
+                    <p:commandButton value="Limpar" action="#{usuarioMB.limpar()}" ajax="false"/>
+                </h:form>
 
                 <p:messages for="formCadUsuarios"/>
             </p:panel>
         </h:form>
 
-        <h:form id="limpar">
-            <p:commandButton value="Limpar" action="#{usuarioMB.limpar()}" ajax="false"/>
-        </h:form>
 
         <h:form id="formPesquisa">
             <p:panel id="formPanelPesquisa" header="Pesquisar Usuario">
@@ -61,7 +64,7 @@
                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
                          rowsPerPageTemplate="5,10,15,20,25">
                 <f:facet name="header">  
-                    <h:outputText value="Todas os Usuários" /> 
+                    <h:outputText value="Todos os Usuários" /> 
                 </f:facet>
 
                 <p:column>
@@ -69,7 +72,7 @@
                         <h:outputText value="Id" />
                     </f:facet>
                     <p:commandLink value="#{c.id}" update=":formCadUsuarios">
-                        <f:setPropertyActionListener value="#{c}" target="#{UsuarioMB.u}"/> 
+                        <f:setPropertyActionListener value="#{c}" target="#{usuarioMB.u}"/> 
                     </p:commandLink>
                 </p:column>
 
@@ -110,6 +113,15 @@
 
             </p:dataTable>
         </h:form>
+        <br/>
+        <hr></hr>
+        <br/>
+        <h:form id="linguagem" >
+            <center>
+                <td> <h:commandButton image="/imagem/Brasil.png"/></td>
+                <td> <h:commandButton image="/imagem/EUA.png"/></td>
+            </center>
+        </h:form> 
     </h:body>
 
 </html>

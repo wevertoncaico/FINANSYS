@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Cadastro de Despesas</title>
+    </h:head>
+
+    <h:body>
+        <center>
+            <p:graphicImage value="/imagem/FINANSYS2.png"/>
+        </center>
+        <h:form></h:form>
+
+        <h:form id="formCadDespesas">
+            <p:panel header="Manutenção de Despesas">
+
+                <h:inputHidden value="#{despesaMB.d.id}"/>
+                <h:panelGrid columns="3">
+                    <h:outputText value="Descrição: *"/>
+                    <p:inputText id="campoDescricao" value="#{despesaMB.d.descricao}" required="true" requiredMessage="Campo obrigatório"/>
+                    <p:message for="campoDescricao"/>
+
+                    <h:outputText value="Valor: *"/>
+                    <p:inputText id="campoValor" value="#{despesaMB.d.valor}" required="true" requiredMessage="Campo obrigatório"/>
+                    <p:message for="campoValor"/>
+
+                    <h:outputText value="Data: *"/>
+                    <p:calendar   id="campoData" pattern="dd/MM/yyyy" value="#{despesaMB.d.dat}" required="true" requiredMessage="Campo obrigatório"/>
+                    <p:message for="campoData"/>
+                </h:panelGrid>
+
+                <br/>
+                <h:outputText value="* representa que os campos são obrigatórios"/>
+                <br/>
+                <br/>
+                <p:commandButton value="Cadastrar" action="#{despesaMB.cadastrar()}" ajax="false"/>
+                <p:commandButton value="Alterar" action="#{despesaMB.alterar()}" ajax="false"/>
+
+                <h:form id="limpar">
+                    <p:commandButton value="Limpar" action="#{despesaMB.limpar()}" ajax="false"/>
+                </h:form>
+
+                <p:messages for="formCadDespesas"/>
+            </p:panel>
+        </h:form>
+
+
+        <h:form id="formPesquisa">
+            <p:panel id="formPanelPesquisa" header="Pesquisar Despesa">
+                <h:panelGrid columns="3">
+                    <h:outputLabel value="Descrição:*"/>
+                    <p:inputText id="pesquisar" style="text-transform: lowercase" maxlength="30" value ="#{despesaMB.pesquisa}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="pesquisar"/>
+                </h:panelGrid>
+                <p:commandButton ajax="false" value="Pesquisar" action="#{despesaMB.pesquisarPorDescricao()}" image="ui-icon-search" update="formPesquisa, :tabela, :formCadDespesas"/>
+            </p:panel>
+        </h:form> 
+
+
+        <h:form id="tabela">
+            <p:dataTable   id="dataTable" var="d" emptyMessage="Nenhuma Despesa cadastrada" value="#{despesaMB.listaDespesa}" paginator="true" rows="5"  
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                         rowsPerPageTemplate="5,10,15,20,25,30,35">
+                <f:facet name="header">  
+                    <h:outputText value="Todas as Despesas" /> 
+                </f:facet>
+
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="Id" />
+                    </f:facet>
+                    <p:commandLink value="#{d.id}" update=":formCadDespesas">
+                        <f:setPropertyActionListener value="#{d}" target="#{despesaMB.d}"/> 
+                    </p:commandLink>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Descrição" />
+                    </f:facet>
+                    <p:commandLink  id="tabDescricao" ajax="false" value="#{d.descricao}" update=":formCadDespesas">
+                        <f:setPropertyActionListener value="#{d}" target="#{despesaMB.d}"/> 
+                        <h:outputText value="${d.descricao}"/>
+                    </p:commandLink>
+                </p:column>
+                <p:column >  
+                    <f:facet name="header">
+                        <h:outputText value="Data" />   
+                    </f:facet>
+                    <p:commandLink id="tabData" ajax="false" value="#{d.dat}" update=":formCadDespesas">
+                        <f:setPropertyActionListener value="#{d}" target="#{despesaMB.d}"/> 
+                        <h:outputText value="${d.dat}"/>
+                    </p:commandLink>
+                </p:column>
+                <p:column >  
+                    <f:facet name="header">
+                        <h:outputText value="Valor" />   
+                    </f:facet>   
+                    <p:commandLink id="TabValor" ajax="false" value="#{d.valor}" update=":formCadDespesas">
+                        <f:setPropertyActionListener value="#{d}" target="#{despesaMB.d}"/> 
+                        <h:outputText value="${d.valor}"/>
+                    </p:commandLink>
+                </p:column>
+
+                <p:column >  
+                    <f:facet name="header">
+                        <h:outputText value="Excluir" />   
+                    </f:facet>   
+                    <p:commandButton id="Tabexcluir" ajax="false" action="#{despesaMB.excluir(d.id)}" image="ui-icon ui-icon-trash" update=":formCadDespesas, :tabela"/>
+                </p:column>
+
+            </p:dataTable>
+        </h:form>
+        <br/>
+        <hr></hr>
+        <br/>
+        <h:form id="linguagem" >
+            <center>
+                <td> <h:commandButton image="/imagem/Brasil.png"/></td>
+                <td> <h:commandButton image="/imagem/EUA.png"/></td>
+            </center>
+        </h:form> 
+    </h:body>
+
+</html>
+
+
