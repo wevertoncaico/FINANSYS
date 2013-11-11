@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Cadastro de Produtos</title>
+    </h:head>
+    <h:body>
+        <center>
+            <p:graphicImage value="/imagem/FINANSYS2.png"/>
+        </center>
+        
+        <h:form id="formCadProdutos">
+            <p:panel header="Manutenção de Produtos" >
+                
+                <h:inputHidden value="#{produtoMB.p.id}"/>
+                <h:panelGrid columns="3">
+                    <h:outputText value="Nome: *"/>
+                    <p:inputText id="campoNome" value="#{produtoMB.p.nome}" required="true" requiredMessage="Campo obrigatório"/>
+                    <p:message for="campoNome"/>
+
+                    <h:outputText value="Preço: *"/>
+                    <p:inputText id="campoPreco" value="#{produtoMB.p.preco}" required="true" requiredMessage="Campo obrigatório"/>
+                    <p:message for="campoPreco"/>
+
+                    <h:outputText value="Estoque: *"/>
+                    <p:inputText id="estoque" value="#{produtoMB.p.qntEstoque}" required="true" requiredMessage="Campo obrigatório"/>
+                    <p:message for="estoque"/>
+                </h:panelGrid>
+                
+                <br/>
+                <h:outputText value="* representa que os campos são obrigatórios"/>
+                <br/>
+                <br/>
+                <p:commandButton value="Cadastrar" action="#{produtoMB.cadastrar()}" ajax="false"/>
+                <p:commandButton value="Alterar" action="#{produtoMB.alterar()}" ajax="false"/>
+
+                <h:form id="limpar">
+                    <p:commandButton value="Limpar" action="#{produtoMB.limpar()}" ajax="false"/>
+                </h:form>
+
+                <p:messages for="formCadProdutos"/>
+            </p:panel>
+        </h:form>
+        
+        
+         <h:form id="tabelaProd">
+             <p:dataTable id="dataTable" var="p" emptyMessage="Nenhum Produto cadastrado" value="#{produtoMB.listaProduto}" paginator="true" rows="5"  
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                         rowsPerPageTemplate="5,10,15,20,25">
+                <f:facet name="header">  
+                    <h:outputText value="Todos os Produtos" /> 
+                </f:facet>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Id" />
+                    </f:facet>
+                    <p:commandLink value="#{p.id}" update=":formCadProdutos">
+                        <f:setPropertyActionListener value="#{p}" target="#{produtoMB.p}"/> 
+                    </p:commandLink>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Nome" />
+                    </f:facet>
+                    <p:commandLink  id="NomeProd" ajax="false" value="#{p.nome}" update=":formCadProdutos">
+                        <f:setPropertyActionListener value="#{p}" target="#{produtoMB.p}"/> 
+                        <h:outputText value="${p.nome}"/>
+                    </p:commandLink>
+                </p:column>
+                <p:column >  
+                    <f:facet name="header">
+                        <h:outputText value="Preço" />   
+                    </f:facet>
+                    <p:commandLink id="precoProd" ajax="false" value="#{p.preco}" update=":formCadProdutos">
+                        <f:setPropertyActionListener value="#{p}" target="#{produtoMB.p}"/> 
+                        <h:outputText value="${p.preco}"/>
+                    </p:commandLink>
+                </p:column>
+                <p:column >  
+                    <f:facet name="header">
+                        <h:outputText value="Qnt. em Estoque" />   
+                    </f:facet>   
+                    <p:commandLink id="estoqueProd" ajax="false" value="#{p.qntEstoque}" update=":formCadProdutos">
+                        <f:setPropertyActionListener value="#{p}" target="#{produto.p}"/> 
+                        <h:outputText value="${p.qntEstoque}"/>
+                    </p:commandLink>
+                </p:column>
+
+                <p:column >  
+                    <f:facet name="header">
+                        <h:outputText value="Excluir" />   
+                    </f:facet>   
+                    <p:commandButton id="excluirProd" ajax="false" action="#{produtoMB.excluir(p.id)}" image="ui-icon ui-icon-trash" update=":formCadProdutos, :tabelaProd"/>
+                </p:column>
+
+            </p:dataTable>
+        </h:form>
+        <br/>
+        <hr></hr>
+        <br/>
+        <h:form id="linguagem" >
+            <center>
+                <td> <h:commandButton image="/imagem/Brasil.png"/></td>
+                <td> <h:commandButton image="/imagem/EUA.png"/></td>
+            </center>
+        </h:form> 
+        
+    </h:body>
+</html>
+
