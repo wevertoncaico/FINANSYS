@@ -15,7 +15,7 @@
         <h:form></h:form>
 
         <h:form id="formCadUsuarios">
-            <p:panel header="Manutenção de Usuarios">
+            <p:panel header="Manutenção de Usuários">
 
                 <h:inputHidden value="#{usuarioMB.u.id}"/>
                 <h:panelGrid columns="3">
@@ -72,7 +72,7 @@
                         <h:outputText value="Id" />
                     </f:facet>
                     <p:commandLink value="#{c.id}" update=":formCadUsuarios">
-                        <f:setPropertyActionListener value="#{c}" target="#{UsuarioMB.u}"/> 
+                        <f:setPropertyActionListener value="#{c}" target="#{usuarioMB.u}"/> 
                     </p:commandLink>
                 </p:column>
 

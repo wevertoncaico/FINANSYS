@@ -6,11 +6,13 @@ package dao;
 
 import dao.exceptions.NonexistentEntityException;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import modelo.Despesa;
@@ -132,6 +134,17 @@ public class DespesaJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+    
+    public List<Despesa> pesquisarPorDescricao(String descricao) {
+        EntityManager em = getEntityManager();
+
+        TypedQuery<Despesa> q;
+     
+        q = em.createQuery("select d from Despesa d where d.descricao like :descricao",Despesa.class);
+        q.setParameter("descricao", "%" + descricao + "%");
+        
+        return q.getResultList();
     }
     
 }
