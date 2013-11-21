@@ -109,9 +109,9 @@
                     <f:facet name="header">
                         <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_DATA)}" />   
                     </f:facet>
-                    <p:commandLink id="tabData" ajax="false" value="#{d.dat}" update=":formCadDespesas">
+                    <p:commandLink id="tabData" ajax="false" value="${d.dataF}" update=":formCadDespesas">
                         <f:setPropertyActionListener value="#{d}" target="#{despesaMB.d}"/> 
-                        <h:outputText value="${d.dat}"/>
+                        <h:outputText value="${d.dataF}"/>
                     </p:commandLink>
                 </p:column>
                 <p:column >  
