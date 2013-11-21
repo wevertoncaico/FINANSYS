@@ -15,75 +15,81 @@
         <h:form></h:form>
 
         <h:form id="formCadDespesas">
-            <p:panel header="Manutenção de Despesas">
+            <p:panel header="#{mensagemMB.carregarMensagemDeArquivo(mens.TITULO_PAINEL_CADASTRO_DESPESA)}">
 
                 <h:inputHidden value="#{despesaMB.d.id}"/>
                 <h:panelGrid columns="3">
-                    <h:outputText value="Descrição: *"/>
-                    <p:inputText id="campoDescricao" value="#{despesaMB.d.descricao}" required="true" requiredMessage="Campo obrigatório"/>
+                    <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_DESCRICAOOB)}"/>
+                    <p:inputText id="campoDescricao" value="#{despesaMB.d.descricao}" required="true" requiredMessage="#{mensagemMB.carregarMensagemDeArquivo(mens.MENSAGEM_CAMPO_OBRIGATORIO)}"/>
                     <p:message for="campoDescricao"/>
 
-                    <h:outputText value="Valor: *"/>
-                    <p:inputText id="campoValor" value="#{despesaMB.d.valor}" required="true" requiredMessage="Campo obrigatório"/>
+                    <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_VALOROB)}"/>
+                    <p:inputText id="campoValor" value="#{despesaMB.d.valor}" required="true" requiredMessage="#{mensagemMB.carregarMensagemDeArquivo(mens.MENSAGEM_CAMPO_OBRIGATORIO)}"/>
                     <p:message for="campoValor"/>
 
-                    <h:outputText value="Data: *"/>
-                    <p:calendar   id="campoData" value="#{despesaMB.d.dat}" required="true" requiredMessage="Campo obrigatório">
-                   
+                    <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_DATAOB)}"/>
+                    <p:calendar   id="campoData" value="#{despesaMB.d.dat}" required="true" requiredMessage="#{mensagemMB.carregarMensagemDeArquivo(mens.MENSAGEM_CAMPO_OBRIGATORIO)}">
+
                     </p:calendar>
                     <p:message for="campoData"/>
                 </h:panelGrid>
 
                 <br/>
-                <h:outputText value="* representa que os campos são obrigatórios"/>
+                <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.MENSAGEM_OBRIGACAO)}"/>
                 <br/>
                 <br/>
-                <p:commandButton value="Cadastrar" action="#{despesaMB.cadastrar()}" ajax="false"/>
-                <p:commandButton value="Alterar" action="#{despesaMB.alterar()}" ajax="false"/>
+                <p:commandButton value="#{mensagemMB.carregarMensagemDeArquivo(mens.BOTAO_CADASTRAR)}" action="#{despesaMB.cadastrar()}" ajax="false"/>
+                <p:commandButton value="#{mensagemMB.carregarMensagemDeArquivo(mens.BOTAO_ALTERAR)}" action="#{despesaMB.alterar()}" ajax="false"/>
 
                 <h:form id="limpar">
-                    <p:commandButton value="Limpar" action="#{despesaMB.limpar()}" ajax="false"/>
+                    <p:commandButton value="#{mensagemMB.carregarMensagemDeArquivo(mens.BOTAO_LIMPAR)}" action="#{despesaMB.limpar()}" ajax="false"/>
                 </h:form>
 
                 <p:messages for="formCadDespesas"/>
             </p:panel>
         </h:form>
 
+        <p:panel id="formPanelPesquisa" header="#{mensagemMB.carregarMensagemDeArquivo(mens.TITULO_PAINEL_PESQUISA)}">
+            <h:form id="formPesquisa">
 
-        <h:form id="formPesquisa">
-            <p:panel id="formPanelPesquisa" header="Pesquisar Despesa">
                 <h:panelGrid columns="3">
-                    <h:outputLabel value="Descrição:*"/>
+                    <h:outputLabel value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_DESCRICAOOB)}"/>
                     <p:inputText id="pesquisar" style="text-transform: lowercase" maxlength="30" value ="#{despesaMB.pesquisa}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="pesquisar"/>
                 </h:panelGrid>
-                <p:commandButton ajax="false" value="Pesquisar" action="#{despesaMB.pesquisarPorDescricao()}" image="ui-icon-search" update="formPesquisa, :tabela, :formCadDespesas"/>
-            </p:panel>
-        </h:form> 
-        
-        
-        <h:form id="formPesq">
-            <p:panel id="formPanelPesq" header="Pesquisar Despesa">
+                <p:commandButton ajax="false" value="#{mensagemMB.carregarMensagemDeArquivo(mens.BOTAO_PESQUISAR)}" action="#{despesaMB.pesquisarPorDescricao()}" image="ui-icon-search" update=" formPesquisa, :tabela, :formCadDespesas"/>
+
+            </h:form> 
+            <br/>
+            <h:form>
+                <p:commandButton ajax="false" value="#{mensagemMB.carregarMensagemDeArquivo(mens.BOTAO_PESQUISAR_TUDO)}" action="#{despesaMB.pesquisarAll()}" image="ui-icon-search" update=" formPesquisa, :tabela, :formCadDespesas"/>
+            </h:form>
+        </p:panel>
+
+        <p:panel id="formPanelPesq" header="#{mensagemMB.carregarMensagemDeArquivo(mens.TITULO_PAINEL_PESQUISA)}">
+            <h:form id="formPesq">
+
                 <h:panelGrid columns="3">
-                    <h:outputLabel value="Data*"/>
+                    <h:outputLabel value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_DATAOB)}"/>
                     <p:calendar id="pesquisarDa" style="text-transform: lowercase" maxlength="30" value ="#{despesaMB.pesData}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="pesquisarDa"/>
                 </h:panelGrid>
-                <p:commandButton ajax="false" value="Pesquisar" action="#{despesaMB.pesquisarData()}" image="ui-icon-search" update="formPesq, :tabela, :formCadDespesas"/>
-            </p:panel>
-        </h:form> 
-        
-        
+                <p:commandButton ajax="false" value="#{mensagemMB.carregarMensagemDeArquivo(mens.BOTAO_PESQUISAR)}" action="#{despesaMB.pesquisarData()}" image="ui-icon-search" update="formPesq, :tabela, :formCadDespesas"/>
+
+            </h:form> 
+            <br/>
+        </p:panel>
+
 
         <h:form id="tabela">
-            <p:dataTable   id="dataTable" var="d" emptyMessage="Nenhuma Despesa cadastrada" value="#{despesaMB.listaDespesa}" paginator="true" rows="5"  
-                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
-                         rowsPerPageTemplate="5,10,15,20,25,30,35">
+            <p:dataTable   id="dataTable" var="d" emptyMessage="#{mensagemMB.carregarMensagemDeArquivo(mens.MENSAGEM_TABELA_DESPESA)}" value="#{despesaMB.listaDespesa}" paginator="true" rows="5"  
+                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                           rowsPerPageTemplate="5,10,15,20,25,30,35">
                 <f:facet name="header">  
-                    <h:outputText value="Todas as Despesas" /> 
+                    <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.TITULO_TABELA_DESPESAS)}" /> 
                 </f:facet>
 
                 <p:column >
                     <f:facet name="header">
-                        <h:outputText value="Id" />
+                        <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_ID)}" />
                     </f:facet>
                     <p:commandLink value="#{d.id}" update=":formCadDespesas">
                         <f:setPropertyActionListener value="#{d}" target="#{despesaMB.d}"/> 
@@ -92,7 +98,7 @@
 
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="Descrição" />
+                        <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_DESCRICAO)}" />
                     </f:facet>
                     <p:commandLink  id="tabDescricao" ajax="false" value="#{d.descricao}" update=":formCadDespesas">
                         <f:setPropertyActionListener value="#{d}" target="#{despesaMB.d}"/> 
@@ -101,7 +107,7 @@
                 </p:column>
                 <p:column >  
                     <f:facet name="header">
-                        <h:outputText value="Data" />   
+                        <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_DATA)}" />   
                     </f:facet>
                     <p:commandLink id="tabData" ajax="false" value="#{d.dat}" update=":formCadDespesas">
                         <f:setPropertyActionListener value="#{d}" target="#{despesaMB.d}"/> 
@@ -110,7 +116,7 @@
                 </p:column>
                 <p:column >  
                     <f:facet name="header">
-                        <h:outputText value="Valor" />   
+                        <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_VALOR)}" />   
                     </f:facet>   
                     <p:commandLink id="TabValor" ajax="false" value="#{d.valor}" update=":formCadDespesas">
                         <f:setPropertyActionListener value="#{d}" target="#{despesaMB.d}"/> 
@@ -120,7 +126,7 @@
 
                 <p:column >  
                     <f:facet name="header">
-                        <h:outputText value="Excluir" />   
+                        <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_EXCLUIR)}" />   
                     </f:facet>   
                     <p:commandButton id="Tabexcluir" ajax="false" action="#{despesaMB.excluir(d.id)}" image="ui-icon ui-icon-trash" update=":formCadDespesas, :tabela"/>
                 </p:column>
@@ -132,8 +138,12 @@
         <br/>
         <h:form id="linguagem" >
             <center>
-                <td> <h:commandButton image="/imagem/Brasil.png"/></td>
-                <td> <h:commandButton image="/imagem/EUA.png"/></td>
+                <h:commandLink value="#{mensagemMB.carregarMensagemDeArquivo(mens.LINK_VOLTAR_PAGINA)}" action="faces/BemVindo.xhtml"/>
+            </center>
+            <br/>
+            <center>
+                <td> <h:commandButton image="/imagem/Brasil.png" action="#{localeController.portugueseLocale}"/></td>
+                <td> <h:commandButton image="/imagem/EUA.png" action="#{localeController.inglesLocale}"/></td>
             </center>
         </h:form> 
     </h:body>

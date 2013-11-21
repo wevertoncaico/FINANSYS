@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Vender</title>
+    </h:head>
+    <h:body>
+        <form>
+
+            <p:layout fullPage="true">  
+
+                <p:layoutUnit position="north" size="182" resizable="true">  
+                    <center>
+                        <p:graphicImage value="/imagem/FINANSYS2.png"/>
+                    </center>
+                </p:layoutUnit>  
+
+                <p:layoutUnit position="south" size="0"  resizable="true">  
+
+                </p:layoutUnit>  
+
+                <p:layoutUnit position="west" size="510" resizable="true" >  
+                    <h:form>
+                        <p:dataTable value="#{produtoMB.listaProduto}" var="p" emptyMessage="Nenhum Produto disponível" paginator="true" rows="5"  
+                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "  
+                           rowsPerPageTemplate="5,10,15,20,25,30,35" >
+                            <f:facet name="header" >  
+                                <h:outputText value="Lista de Produtos a Venda" /> 
+                            </f:facet>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Nome" />
+                                </f:facet>
+                                <p:commandLink  id="tabNome" ajax="false" value="#{p.nome}">
+                                    <h:outputText value="${p.nome}"/>
+                                </p:commandLink>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Preço" />
+                                </f:facet>
+                                <p:commandLink  id="tabpreco" ajax="false" value="#{p.preco}">
+                                    <h:outputText value="${p.preco}"/>
+                                </p:commandLink>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Estoque" />
+                                </f:facet>
+                                <p:commandLink  id="tabEst" ajax="false" value="#{p.qntEstoque}">
+                                    <h:outputText value="${p.qntEstoque}"/>
+                                </p:commandLink>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Vender" />
+                                </f:facet>
+                                <p:commandButton value="Adicionar" ajax="false">
+                                    <f:setPropertyActionListener value="#{p}" target="#{produtoMB.p}"/>
+                                </p:commandButton> 
+                            </p:column>
+
+                        </p:dataTable> 
+                    </h:form>
+                </p:layoutUnit>  
+
+                <p:layoutUnit position="center" >  
+                    <h:form id="forVenda"> 
+                        <p:panel header="Finalizar Venda" >
+                            <h:outputText value="#{vendaMB.mes}"/>
+                            <h:outputText value="#{produtoMB.p.nome} ..........Valor: R$#{produtoMB.p.preco} "/> 
+                            <h:panelGrid columns="3">
+                                <br/>
+                                <br/>
+                                <h:form>
+                                    <h:outputLabel for="qua" value="Quantidade: * " />  
+                                    <p:spinner  size="4" id="qua" value="#{vendaMB.quantidade}" min="1" max="#{produtoMB.p.qntEstoque}"/>
+                                    <p:spacer height="10"/>
+                                    <p:commandButton action="#{vendaMB.inserirProduto()}" ajax="false" value="Inserir"/>
+                                    <p:commandButton action="#{vendaMB.finalizarCompra()}" ajax="false" value="Finalizar"/>
+                                </h:form>
+                            </h:panelGrid>
+                            
+                        </p:panel>
+                    </h:form>
+
+                </p:layoutUnit>  
+
+            </p:layout>  
+
+        </form>
+
+    </h:body>
+</html>
+

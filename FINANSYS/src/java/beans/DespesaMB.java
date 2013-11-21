@@ -2,7 +2,6 @@ package beans;
 
 import dao.DespesaJpaController;
 import dao.exceptions.NonexistentEntityException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,19 +27,10 @@ public class DespesaMB {
     private DespesaJpaController dao = new DespesaJpaController(EMF.getEntityManagerFactory());
     private String pesquisa;
     private Date pesData;
-    private SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
-    private String dataFormatada;
     
     public DespesaMB() {
         pesquisarAll();
     }
-    
-    public String dataFormatada(Date d)
-    {
-        dataFormatada = formatador.format(d);
-        return dataFormatada;
-    }
-    
 
     /**
      * @return the listaDespesa

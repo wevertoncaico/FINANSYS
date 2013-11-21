@@ -23,34 +23,28 @@
                     <h:form id="login">
 
                         <h:panelGrid columns="2" cellpadding="5">
-                            <p:outputLabel for="username" value="Usuário " />
-                            <h:inputText id="username" required="true" label="username" />
+                            <p:outputLabel for="username" value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_USUARIO)} " />
+                            <h:inputText id="username"  label="username" />
 
-                            <p:outputLabel for="password" value="Senha " />
-                            <h:inputSecret id="password" required="true" label="password" />
+                            <p:outputLabel for="password" value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_SENHAOB)} " />
+                            <h:inputSecret id="password" label="password" />
 
                             <f:facet name="footer" >
                                 <center>
-                                    <p:commandButton id="loginButton" value="Entre" update="login" image="ui-icon-check" ajax="false" />
+                                    <p:commandButton id="loginButton" value="#{mensagemMB.carregarMensagemDeArquivo(mens.BOTAO_ENTRE)}" action="faces/BemVindo.xhtml" update="login" image="ui-icon-check" ajax="false" />
                                 </center>
                             </f:facet>
                         </h:panelGrid>
 
-
                     </h:form>
 
-                    <h:form> 
-                        <h:commandLink value="Usuario" action="faces/Usuario.xhtml"/>
-                        <br/>
-                        <h:commandLink value="Despesa" action="faces/Despesa.xhtml"/>
-                    </h:form>
                 </p:layoutUnit> 
 
                 <p:layoutUnit position="south" size="100" resizable="true">  
                     <h:form id="linguagem" >
                         <center>
-                            <td> <h:commandButton image="/imagem/Brasil.png"/></td>
-                            <td> <h:commandButton image="/imagem/EUA.png"/></td>
+                            <td> <h:commandButton image="/imagem/Brasil.png" action="#{localeController.portugueseLocale}"/></td>
+                            <td> <h:commandButton image="/imagem/EUA.png" action="#{localeController.inglesLocale}"/></td>
                         </center>
                     </h:form> 
                 </p:layoutUnit>
