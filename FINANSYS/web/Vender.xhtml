@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title> Venda de produtos</title>
+    </h:head>
+
+    <h:body>
+        <center>
+            <p:graphicImage value="/imagem/FINANSYS2.png"/>
+        </center>
+        <h:form></h:form>
+
+        <h:form id="tabelaProd">
+            <p:dataTable value="#{produtoMB.listaProduto}" var="p" emptyMessage="#{mensagemMB.carregarMensagemDeArquivo(mens.MENSAGEM_TABELA_VENDA)}" paginator="true" rows="6" >
+                <f:facet name="header" >  
+                    <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.TITULO_TABELA_VENDA)}" /> 
+                </f:facet>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_NOME)}" />
+                    </f:facet>
+                    <h:outputText value="${p.nome}"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_PRECO)}" />
+                    </f:facet>
+                    <h:outputText value="${p.preco}"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_ESTOQUE)}" />
+                    </f:facet>
+                    <h:outputText value="${p.qntEstoque}"/>
+                </p:column>
+
+                <p:column >
+
+                    <p:commandButton value="#{mensagemMB.carregarMensagemDeArquivo(mens.BOTAO_ADICIONAR)}" ajax="false" >                    
+
+                        <f:setPropertyActionListener value="#{p}" target="#{vendaMB.p}" />
+
+                    </p:commandButton >
+
+                </p:column>
+
+            </p:dataTable> 
+        </h:form>
+
+        <br/>
+        <p:panel header="#{mensagemMB.carregarMensagemDeArquivo(mens.VENDA)}" >
+            <br/>
+            <center>
+                <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.MENSAGEM_SUCESSO)}" rendered="#{vendaMB.mostrarMensagemSucesso}"/> 
+                <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.ESTOQUE_ZERO)}" rendered="#{vendaMB.estoqueZero}"/>
+                <br/>
+                <h:outputText value="#{vendaMB.v.itens.size()} #{mensagemMB.carregarMensagemDeArquivo(mens.TOTAL_ITENS_ADD)}  " rendered="#{vendaMB.mostrarTotalVenda}"/>
+                <br/>
+                <h:outputText value="Total: #{vendaMB.v.totalDaVenda}" rendered="#{vendaMB.mostrarTotalVenda}"/>
+            </center>
+            <br/>
+            <center>
+                <h:outputText value="#{vendaMB.p.nome} .............................  R$#{vendaMB.p.preco} "/> 
+                <br/>
+                <h:form> 
+                    <h:outputLabel id="qua" value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_QUANTIDADE)} "/>
+
+
+                    <p:spinner id="campoQuantiade" value="#{vendaMB.quan}" min="1" size="4"/>
+
+                    <p:commandButton action="#{vendaMB.adicionar()}" value="#{mensagemMB.carregarMensagemDeArquivo(mens.BOTAO_INSERIR)}" ajax="false"/>
+                </h:form>
+
+                <h:form>            
+                    <p:commandButton action="#{vendaMB.finalizarCompra()}" value="#{mensagemMB.carregarMensagemDeArquivo(mens.BOTAO_FINALIZAR)}" ajax="false"/>
+                    <p:commandButton action="#{vendaMB.limparVenda()}" value="#{mensagemMB.carregarMensagemDeArquivo(mens.BOTAO_LIMPAR_VENDA)}" ajax="false"/>
+                </h:form>
+            </center>
+
+            <br/>
+        <h:form id="TabelaItemVenda">
+            
+            <p:dataTable value="#{vendaMB.listaVenda}" var="v" emptyMessage="#{mensagemMB.carregarMensagemDeArquivo(mens.MENSAGEM_TABELA_PROD_ADD)}">
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_NOME)}" />
+                    </f:facet>
+                    <h:outputText value="${v.nome}"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_PRECO)}" />
+                    </f:facet>
+                    <h:outputText value="${v.preco}"/>
+                </p:column>
+
+            </p:dataTable> 
+        </h:form>
+                   
+        </p:panel>
+
+        <br/>
+        <hr></hr>
+        <br/>
+
+        <h:form id="linguagem" >
+            <center>
+                <h:commandLink value="#{mensagemMB.carregarMensagemDeArquivo(mens.LINK_VOLTAR_PAGINA)}" action="faces/BemVindo.xhtml"/>
+            </center>
+            <br/>
+            <center>
+                <td> <h:commandButton image="/imagem/Brasil.png" action="#{localeController.portugueseLocale}"/></td>
+                <td> <h:commandButton image="/imagem/EUA.png" action="#{localeController.inglesLocale}"/></td>
+            </center>
+        </h:form> 
+    </h:body>
+
+</html>
+

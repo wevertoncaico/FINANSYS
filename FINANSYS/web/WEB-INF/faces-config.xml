@@ -3,5 +3,27 @@
     xmlns="http://xmlns.jcp.org/xml/ns/javaee"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
-
+    
+    <application>
+        
+        <locale-config>
+            <default-locale>pt_BR</default-locale>
+            <supported-locale>pt_BR</supported-locale>
+            <supported-locale>en</supported-locale>
+        </locale-config>
+        
+        <message-bundle>aplicacao.Mensagens</message-bundle>
+        <resource-bundle>
+            <base-name>aplicacao.Mensagens</base-name>
+            <var>mens</var>
+        </resource-bundle>
+    </application>
+    
+    <managed-bean>
+        <managed-bean-name>localeController</managed-bean-name>
+        <managed-bean-class>
+            locale.LocaleController
+        </managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
 </faces-config>

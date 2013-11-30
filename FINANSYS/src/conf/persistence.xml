@@ -3,10 +3,10 @@
   <persistence-unit name="FINANSYSPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>modelo.Despesa</class>
-    <class>modelo.Usuario</class>
     <class>modelo.Item</class>
-    <class>modelo.Venda</class>
     <class>modelo.Produto</class>
+    <class>modelo.Usuario</class>
+    <class>modelo.Venda</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/sample"/>

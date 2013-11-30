@@ -5,6 +5,7 @@
 package modelo;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,6 +27,8 @@ public class Despesa implements Serializable {
     private Double valor;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dat;
+    private String dataF;
+    private SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
   
     
     public Long getId() {
@@ -89,6 +92,20 @@ public class Despesa implements Serializable {
     @Override
     public String toString() {
         return "modelo.Despesa[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the dataF
+     */
+    public String getDataF() {
+        return dataF;
+    }
+
+    /**
+     * @param dataF the dataF to set
+     */
+    public void setDataF(Date d) {
+        dataF = formatador.format(d);
     }
 
 }

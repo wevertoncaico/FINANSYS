@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package dao;
 
 import dao.exceptions.NonexistentEntityException;
@@ -34,7 +31,7 @@ public class VendaJpaController implements Serializable {
         EntityManager em = null;
         try {
             em = getEntityManager();
-            em.getTransaction().begin();
+            em.getTransaction().begin();              
             em.persist(venda);
             em.getTransaction().commit();
         } finally {

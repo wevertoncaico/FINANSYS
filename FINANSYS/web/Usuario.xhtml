@@ -15,65 +15,86 @@
         <h:form></h:form>
 
         <h:form id="formCadUsuarios">
-            <p:panel header="Manutenção de Usuarios">
+            <p:panel header="#{mensagemMB.carregarMensagemDeArquivo(mens.TITULO_PAINEL_CADASTRO_USUARIO)}">
+
+                <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.MSG_CADASTRADO)} " rendered="#{usuarioMB.mostrarMsgCadastrado}"/>  
+                <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.MSG_CADASTRO_EXISTE)} " rendered="#{usuarioMB.mostrarMsgCadastroExiste}"/>
+                <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.MSG_ERRO_CADASTRO)} " rendered="#{usuarioMB.mostarMsgCadastroErro}"/>  
+                <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.MSG_ALTERADO)} " rendered="#{usuarioMB.mostarMsgAlterar}"/> 
+                <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.MSG_ALTERAR_ERRO)} " rendered="#{usuarioMB.mostarMsgAlterarErro}"/>
+                <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.MSG_ALTERAR_ALGUN_ERRO)} " rendered="#{usuarioMB.mostarMsgAltErros}"/>
+                <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.MSG_EXCLUIDO)} " rendered="#{usuarioMB.mostarMsgExcluir}"/>
+                <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.MSG_EXCLUSAO_ALGUN_ERRO)} " rendered="#{usuarioMB.mostarMsgExcErros}"/>
+                <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.MENSAGEM_VALIDA_LOGIN)} " rendered="#{usuarioMB.msgValida}"/>
+
+
+                <br/>
 
                 <h:inputHidden value="#{usuarioMB.u.id}"/>
                 <h:panelGrid columns="3">
-                    <h:outputText value="Nome: *"/>
-                    <p:inputText id="campoNome" value="#{usuarioMB.u.nome}" required="true" requiredMessage="Campo obrigatório"/>
+                    <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_NOMEOB)}"/>
+                    <p:inputText id="campoNome" value="#{usuarioMB.u.nome}" required="true" requiredMessage="#{mensagemMB.carregarMensagemDeArquivo(mens.MENSAGEM_CAMPO_OBRIGATORIO)}">
+                        <f:validateLength for="campoNome" minimum="3" />
+                    </p:inputText>
                     <p:message for="campoNome"/>
 
-                    <h:outputText value="Login: *"/>
-                    <p:inputText id="campoLogin" value="#{usuarioMB.u.login}" required="true" requiredMessage="Campo obrigatório"/>
+                    <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_LOGINOB)}"/>
+                    <p:inputText id="campoLogin" value="#{usuarioMB.u.login}" required="true" requiredMessage="#{mensagemMB.carregarMensagemDeArquivo(mens.MENSAGEM_CAMPO_OBRIGATORIO)}">
+                        <f:validateLength for="campoLogin" minimum="4" />
+                    </p:inputText>
                     <p:message for="campoLogin"/>
 
-                    <h:outputText value="Senha: *"/>
-                    <p:password id="campoSenha" value="#{usuarioMB.u.senha}" required="true" requiredMessage="Campo obrigatório"/>
+                    <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_SENHAOB)}"/>
+                    <p:password id="campoSenha" value="#{usuarioMB.u.senha}" required="true" requiredMessage="#{mensagemMB.carregarMensagemDeArquivo(mens.MENSAGEM_CAMPO_OBRIGATORIO)}">
+                        <f:validateLength for="campoSenha" minimum="6" />
+                    </p:password>
                     <p:message for="campoSenha"/>
                 </h:panelGrid>
 
                 <br/>
-                <h:outputText value="* representa que os campos são obrigatórios"/>
+                <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.MENSAGEM_OBRIGACAO)}"/>
                 <br/>
                 <br/>
-                <p:commandButton value="Cadastrar" action="#{usuarioMB.cadastrar()}" ajax="false"/>
-                <p:commandButton value="Alterar" action="#{usuarioMB.alterar()}" ajax="false"/>
-
-                <h:form id="limpar">
-                    <p:commandButton value="Limpar" action="#{usuarioMB.limpar()}" ajax="false"/>
-                </h:form>
+                <p:commandButton value="#{mensagemMB.carregarMensagemDeArquivo(mens.BOTAO_CADASTRAR)}" action="#{usuarioMB.cadastrar()}" ajax="false"/>
+                <p:commandButton value="#{mensagemMB.carregarMensagemDeArquivo(mens.BOTAO_ALTERAR)}" action="#{usuarioMB.alterar()}" ajax="false"/>
 
                 <p:messages for="formCadUsuarios"/>
             </p:panel>
         </h:form>
 
-        <p:panel id="formPanelPesquisa" header="Pesquisar Usuario">
+        <h:form id="limpar">
+            <p:spacer height="20"/>
+            <p:commandButton value="#{mensagemMB.carregarMensagemDeArquivo(mens.BOTAO_LIMPAR)}" action="#{usuarioMB.limpar()}" ajax="false"/>
+        </h:form>
+
+
+        <p:panel id="formPanelPesquisa" header="#{mensagemMB.carregarMensagemDeArquivo(mens.TITULO_PAINEL_PESQUISA_USUARIO)}">
             <h:form id="formPesquisa">
 
                 <h:panelGrid columns="3">
-                    <h:outputLabel value="Nome:*"/>
-                    <p:inputText size="40" id="nomeDoUsuario" style="text-transform: lowercase" maxlength="30" value ="#{usuarioMB.pesquisa}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="nomeDoUsuario"/>
+                    <h:outputLabel value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_NOMEOB)}"/>
+                    <p:inputText size="40" id="nomeDoUsuario" style="text-transform: lowercase" maxlength="30" value ="#{usuarioMB.pesquisa}" required="true" requiredMessage="#{mensagemMB.carregarMensagemDeArquivo(mens.MENSAGEM_CAMPO_OBRIGATORIO)}"/><p:message for="nomeDoUsuario"/>
                 </h:panelGrid>
-                <p:commandButton ajax="false" value="Pesquisar" action="#{usuarioMB.pesquisarNome()}" image="ui-icon-search" update="formPesquisa, :tabela, :formCadUsuarios"/>
+                <p:commandButton ajax="false" value="#{mensagemMB.carregarMensagemDeArquivo(mens.BOTAO_PESQUISAR)}" action="#{usuarioMB.pesquisarNome()}" image="ui-icon-search" update="formPesquisa, :tabela, :formCadUsuarios"/>
             </h:form> 
             <br/>
             <h:form>
-                <p:commandButton ajax="false" value="Pesquisar Tudo" action="#{usuarioMB.pesquisarAll()}" image="ui-icon-search" update="formPesquisa, :tabela, :formCadUsuarios"/>
+                <p:commandButton ajax="false" value="#{mensagemMB.carregarMensagemDeArquivo(mens.BOTAO_PESQUISAR_TUDO)}" action="#{usuarioMB.pesquisarAll()}" image="ui-icon-search" update="formPesquisa, :tabela, :formCadUsuarios"/>
             </h:form>
 
         </p:panel>
-        
+
         <h:form id="tabela">
-            <p:dataTable id="dataTable" var="c" emptyMessage="Nenhum Usuário cadastrado" value="#{usuarioMB.listaUsuario}" paginator="true" rows="5"  
+            <p:dataTable id="dataTable" var="c" emptyMessage="#{mensagemMB.carregarMensagemDeArquivo(mens.MENSAGEM_TABELA_USUARIO)}" value="#{usuarioMB.listaUsuario}" paginator="true" rows="5"  
                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
                          rowsPerPageTemplate="5,10,15,20,25">
                 <f:facet name="header">  
-                    <h:outputText value="Todos os Usuários" /> 
+                    <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.TITULO_TABELA_USUARIOS)}" /> 
                 </f:facet>
 
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="Id" />
+                        <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_ID)}" />
                     </f:facet>
                     <p:commandLink value="#{c.id}" update=":formCadUsuarios">
                         <f:setPropertyActionListener value="#{c}" target="#{usuarioMB.u}"/> 
@@ -82,7 +103,7 @@
 
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="Nome" />
+                        <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_NOME)}" />
                     </f:facet>
                     <p:commandLink  id="tabNome" ajax="false" value="#{c.nome}" update=":formCadUsuarios">
                         <f:setPropertyActionListener value="#{c}" target="#{usuarioMB.u}"/> 
@@ -91,7 +112,7 @@
                 </p:column>
                 <p:column >  
                     <f:facet name="header">
-                        <h:outputText value="Login" />   
+                        <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_LOGIN)}" />   
                     </f:facet>
                     <p:commandLink id="tabLogin" ajax="false" value="#{c.login}" update=":formCadUsuarios">
                         <f:setPropertyActionListener value="#{c}" target="#{usuarioMB.u}"/> 
@@ -100,7 +121,7 @@
                 </p:column>
                 <p:column >  
                     <f:facet name="header">
-                        <h:outputText value="Senha" />   
+                        <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_SENHA)}" />   
                     </f:facet>   
                     <p:commandLink id="TabSenha" ajax="false" value="#{c.senha}" update=":formCadUsuarios">
                         <f:setPropertyActionListener value="#{c}" target="#{usuarioMB.u}"/> 
@@ -110,7 +131,7 @@
 
                 <p:column >  
                     <f:facet name="header">
-                        <h:outputText value="Excluir" />   
+                        <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_EXCLUIR)}" />   
                     </f:facet>   
                     <p:commandButton id="Tabexcluir" ajax="false" action="#{usuarioMB.excluir(c.id)}" image="ui-icon ui-icon-trash" update=":formCadUsuarios, :tabela"/>
                 </p:column>
@@ -122,11 +143,14 @@
         <br/>
         <h:form id="linguagem" >
             <center>
-                <td> <h:commandButton image="/imagem/Brasil.png"/></td>
-                <td> <h:commandButton image="/imagem/EUA.png"/></td>
+                <h:commandLink value="#{mensagemMB.carregarMensagemDeArquivo(mens.LINK_VOLTAR_PAGINA)}" action="faces/BemVindo.xhtml" onclick="#{usuarioMB.limpaMsg()}" transient="true"/>
+            </center>
+            <br/>
+            <center>
+                <td> <h:commandButton image="/imagem/Brasil.png" action="#{localeController.portugueseLocale}"/></td>
+                <td> <h:commandButton image="/imagem/EUA.png" action="#{localeController.inglesLocale}"/></td>
             </center>
         </h:form> 
     </h:body>
 
 </html>
-

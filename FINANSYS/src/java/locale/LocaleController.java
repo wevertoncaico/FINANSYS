@@ -1,15 +1,20 @@
-package dao;
+package locale;
 
 import java.util.Locale;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 
+/**
+ *
+ * @author weverton
+ */
+
 public class LocaleController {
  private Locale currentLocale = new Locale("pt", "BR");
 
- public void englishlLocale() {
+ public void inglesLocale() {
   UIViewRoot viewRoot = FacesContext.getCurrentInstance().getViewRoot();
-  currentLocale = Locale.US;
+  currentLocale = new Locale("en");
   viewRoot.setLocale(currentLocale);
  }
 

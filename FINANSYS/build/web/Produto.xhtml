@@ -11,52 +11,71 @@
         <center>
             <p:graphicImage value="/imagem/FINANSYS2.png"/>
         </center>
-        
+
         <h:form id="formCadProdutos">
-            <p:panel header="Manutenção de Produtos" >
-                
+            <p:panel header="#{mensagemMB.carregarMensagemDeArquivo(mens.TITULO_PAINEL_CADASTRO_PRODUTO)}" >
+
+                <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.MSG_CADASTRADO)} " rendered="#{produtoMB.mostrarProCadastrado}"/>  
+                <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.MSG_CADASTRO_EXISTE)} " rendered="#{produtoMB.mostrarProCadastroExiste}"/>
+                <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.MSG_ERRO_CADASTRO)} " rendered="#{produtoMB.mostarProCadastroErro}"/>  
+                <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.MSG_ALTERADO)} " rendered="#{produtoMB.mostarProAlterar}"/> 
+                <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.MSG_ALTERAR_ERRO)} " rendered="#{produtoMB.mostarProAlterarErro}"/>
+                <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.MSG_ALTERAR_ALGUN_ERRO)} " rendered="#{produtoMB.mostarProAltErros}"/>
+                <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.MSG_EXCLUIDO)} " rendered="#{produtoMB.mostarProExcluir}"/>
+                <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.MSG_EXCLUSAO_ALGUN_ERRO)} " rendered="#{produtoMB.mostarProExcErros}"/>
+                <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.MENSAGEM_VALDIDA_PRECO)} " rendered="#{produtoMB.validaPreco}"/>
+
+                <br/>
+
                 <h:inputHidden value="#{produtoMB.p.id}"/>
                 <h:panelGrid columns="3">
-                    <h:outputText value="Nome: *"/>
-                    <p:inputText id="campoNome" value="#{produtoMB.p.nome}" required="true" requiredMessage="Campo obrigatório"/>
+                    <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_NOMEOB)}"/>
+                    <p:inputText id="campoNome" value="#{produtoMB.p.nome}" required="true" requiredMessage="#{mensagemMB.carregarMensagemDeArquivo(mens.MENSAGEM_CAMPO_OBRIGATORIO)}">
+                        <f:validateLength for="campoNome" minimum="3" />
+                    </p:inputText>
                     <p:message for="campoNome"/>
 
-                    <h:outputText value="Preço: *"/>
-                    <p:inputText id="campoPreco" value="#{produtoMB.p.preco}" required="true" requiredMessage="Campo obrigatório"/>
+                    <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_PRECOOB)}"/>
+                    <p:inputText id="campoPreco" value="#{produtoMB.p.preco}" required="true" requiredMessage="#{mensagemMB.carregarMensagemDeArquivo(mens.MENSAGEM_CAMPO_OBRIGATORIO)}">
+                        <f:validateLength for="campoPreco" minimum="1" />
+                    </p:inputText>
                     <p:message for="campoPreco"/>
 
-                    <h:outputText value="Estoque: *"/>
-                    <p:inputText id="estoque" value="#{produtoMB.p.qntEstoque}" required="true" requiredMessage="Campo obrigatório"/>
+                    <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_ESTOQUEOB)}"/>
+                    <p:inputText id="estoque" value="#{produtoMB.p.qntEstoque}" required="true" requiredMessage="#{mensagemMB.carregarMensagemDeArquivo(mens.MENSAGEM_CAMPO_OBRIGATORIO)}">
+                        <f:validateLength for="estoque" minimum="1" />
+                    </p:inputText>
                     <p:message for="estoque"/>
                 </h:panelGrid>
-                
-                <br/>
-                <h:outputText value="* representa que os campos são obrigatórios"/>
-                <br/>
-                <br/>
-                <p:commandButton value="Cadastrar" action="#{produtoMB.cadastrar()}" ajax="false"/>
-                <p:commandButton value="Alterar" action="#{produtoMB.alterar()}" ajax="false"/>
 
-                <h:form id="limpar">
-                    <p:commandButton value="Limpar" action="#{produtoMB.limpar()}" ajax="false"/>
-                </h:form>
+                <br/>
+                <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.MENSAGEM_OBRIGACAO)}"/>
+                <br/>
+                <br/>
+                <p:commandButton value="#{mensagemMB.carregarMensagemDeArquivo(mens.BOTAO_CADASTRAR)}" action="#{produtoMB.cadastrar()}" ajax="false"/>
+                <p:commandButton value="#{mensagemMB.carregarMensagemDeArquivo(mens.BOTAO_ALTERAR)}" action="#{produtoMB.alterar()}" ajax="false"/>
 
                 <p:messages for="formCadProdutos"/>
             </p:panel>
         </h:form>
-        
-        
-         <h:form id="tabelaProd">
-             <p:dataTable id="dataTable" var="p" emptyMessage="Nenhum Produto cadastrado" value="#{produtoMB.listaProduto}" paginator="true" rows="5"  
+
+
+        <h:form id="limpar">
+            <p:spacer height="22"/>
+            <p:commandButton value="#{mensagemMB.carregarMensagemDeArquivo(mens.BOTAO_LIMPAR)}" action="#{produtoMB.limpar()}" ajax="false"/>
+        </h:form>
+
+        <h:form id="tabelaProd">
+            <p:dataTable id="dataTable" var="p" emptyMessage="#{mensagemMB.carregarMensagemDeArquivo(mens.MENSAGEM_TABELA_PRODUTO)}" value="#{produtoMB.listaProduto}" paginator="true" rows="5"  
                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
                          rowsPerPageTemplate="5,10,15,20,25">
                 <f:facet name="header">  
-                    <h:outputText value="Todos os Produtos" /> 
+                    <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.TITULO_TABELA_PRODUTO)}" /> 
                 </f:facet>
 
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="Id" />
+                        <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_ID)}" />
                     </f:facet>
                     <p:commandLink value="#{p.id}" update=":formCadProdutos">
                         <f:setPropertyActionListener value="#{p}" target="#{produtoMB.p}"/> 
@@ -65,7 +84,7 @@
 
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="Nome" />
+                        <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_NOME)}" />
                     </f:facet>
                     <p:commandLink  id="NomeProd" ajax="false" value="#{p.nome}" update=":formCadProdutos">
                         <f:setPropertyActionListener value="#{p}" target="#{produtoMB.p}"/> 
@@ -74,7 +93,7 @@
                 </p:column>
                 <p:column >  
                     <f:facet name="header">
-                        <h:outputText value="Preço" />   
+                        <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_PRECO)}" />   
                     </f:facet>
                     <p:commandLink id="precoProd" ajax="false" value="#{p.preco}" update=":formCadProdutos">
                         <f:setPropertyActionListener value="#{p}" target="#{produtoMB.p}"/> 
@@ -83,7 +102,7 @@
                 </p:column>
                 <p:column >  
                     <f:facet name="header">
-                        <h:outputText value="Qnt. em Estoque" />   
+                        <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_ESTOQUE)}" />   
                     </f:facet>   
                     <p:commandLink id="estoqueProd" ajax="false" value="#{p.qntEstoque}" update=":formCadProdutos">
                         <f:setPropertyActionListener value="#{p}" target="#{produto.p}"/> 
@@ -93,7 +112,7 @@
 
                 <p:column >  
                     <f:facet name="header">
-                        <h:outputText value="Excluir" />   
+                        <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_EXCLUIR)}" />   
                     </f:facet>   
                     <p:commandButton id="excluirProd" ajax="false" action="#{produtoMB.excluir(p.id)}" image="ui-icon ui-icon-trash" update=":formCadProdutos, :tabelaProd"/>
                 </p:column>
@@ -105,11 +124,15 @@
         <br/>
         <h:form id="linguagem" >
             <center>
-                <td> <h:commandButton image="/imagem/Brasil.png"/></td>
-                <td> <h:commandButton image="/imagem/EUA.png"/></td>
+                <h:commandLink value="#{mensagemMB.carregarMensagemDeArquivo(mens.LINK_VOLTAR_PAGINA)}" action="faces/BemVindo.xhtml" onclick="#{produtoMB.limpaMsg()}" transient="true"/>
+            </center>
+            <br/>
+            <center>
+                <td> <h:commandButton image="/imagem/Brasil.png" action="#{localeController.portugueseLocale()}"/></td>
+                <td> <h:commandButton image="/imagem/EUA.png" action="#{localeController.inglesLocale()}"/></td>
             </center>
         </h:form> 
-        
+
     </h:body>
 </html>
 

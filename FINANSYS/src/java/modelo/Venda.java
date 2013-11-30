@@ -25,8 +25,12 @@ public class Venda implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
+    private Double totalDaVenda = 0.0;
+    
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataVenda = new Date();
+    
     @OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "IdVenda")
     private List<Item> itens = new ArrayList<Item>();
@@ -95,14 +99,19 @@ public class Venda implements Serializable {
     public void addItem(Item item) {
         itens.add(item);
     }
-
-    public Double totalVenda() {
-        
-        Double totalDaVenda = 0.0;
-        
-        for (Item i : itens) {
-            totalDaVenda += i.totalItem();
-        }
+    
+    /**
+     * @return the totalDaVenda
+     */
+    public Double getTotalDaVenda() {
         return totalDaVenda;
     }
+
+    /**
+     * @param totalDaVenda the totalDaVenda to set
+     */
+    public void setTotalDaVenda(Double totalDaVenda) {
+        this.totalDaVenda = totalDaVenda;
+    }
+
 }
