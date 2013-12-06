@@ -4,7 +4,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Bem Vindo</title>
     </h:head>
     <h:body>
         <form>
@@ -28,25 +28,34 @@
                             <br/>
                             <p:menuitem value=" #{mensagemMB.carregarMensagemDeArquivo(mens.PAGINA_VENDER)}"  ajax="false" url="Vender.xhtml" icon="ui-icon"/>  
                             <br/>
-                            <p:menuitem value=" Comparar Gastos"  ajax="false" url="CompararGastos.xhtml" icon="ui-icon"/>  
+                            <p:menuitem value="Relatório de despesas" ajax="false" url="RelatorioDeDespesas.xhtml" icon="ui-icon"/>
                             <br/>
-                            <p:menuitem value=" #{mensagemMB.carregarMensagemDeArquivo(mens.PAGINA_SAIR)}" ajax="false" url="Inicio.xhtml" icon="ui-icon" />  
+                            <p:menuitem value="Produtos mais vendidos" ajax="false" url="ProdutosMaisVendido.xhtml" icon="ui-icon"/>
+                            <br/>
+                            <p:menuitem value="#{mensagemMB.carregarMensagemDeArquivo(mens.CONSULTAR_BALANCO)}"  ajax="false" url="Balanco.xhtml" icon="ui-icon"/>  
+                            <br/>
+                            <p:menuitem value="Comparar gastos" ajax="false" url="CompararGastos.xhtml" icon="ui-icon" />  
+                            <br/>
+                            <p:menuitem value="Evolução do Caixa" ajax="false" url="SaldoEmCaixa.xhtml" icon="ui-icon" />  
+                            <br/>
+                            <p:menuitem value=" #{mensagemMB.carregarMensagemDeArquivo(mens.PAGINA_SAIR)}" icon="ui-icon" url="Inicio.xhtml" ajax="false" /> 
+                            <br/>
                         </p:slideMenu>  
                     </h:form>
                 </p:layoutUnit>  
 
                 <p:layoutUnit position="center" >  
                     <h:form> 
-                       
-                            <center>
-                                <p:graphicImage value="/imagem/padeiro.png" height="270" width="267"/>
-                            </center>
-                      
+                        Bem vindo(a)  <h:outputText value="#{loginMB.usuario.nome}" />
+                        <center>
+                            <p:graphicImage value="/imagem/padeiro.png" height="270" width="267"/>
+                        </center>
+
                     </h:form>  
                 </p:layoutUnit>  
-                
-                <p:layoutUnit position="south" size="80"  resizable="true" >  
-                     <h:form id="linguagem" >
+
+                <p:layoutUnit position="south" size="75"  resizable="true" >  
+                    <h:form id="linguagem" >
                         <center>
                             <br/>
                             <td> <h:commandButton image="/imagem/Brasil.png" action="#{localeController.portugueseLocale}"/></td>
@@ -61,4 +70,5 @@
 
     </h:body>
 </html>
+
 

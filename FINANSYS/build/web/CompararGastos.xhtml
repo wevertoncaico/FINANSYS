@@ -5,190 +5,106 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Comparar Gastos</title>
+        <title>Comparar gastos</title>
     </h:head>
     <h:body>
         <center>
             <p:graphicImage value="/imagem/FINANSYS2.png"/>
         </center>
-        <h:form> </h:form>
-        <h:form id="painelComp1">
+        <h:form> 
+            <p:panel header="Comparar Gastos dos Meses">
+                <h:form>
 
-            <p:panel id="painel_1">
-                
-                <center>
-                        <p:outputLabel id="campoData1" value="Selecione a data 1 : * "/>
-                        <p:calendar  size="5" id="calendarComp1" value="#{compararGastosMB.data_1}" required="true"/>
+                    <p:message for="calendarComp1"/>
+                    <p:message for="calendarComp2"/>
+                    <center>
+                        <p:outputLabel id="Data1" value="#{mens.SELECIONE_DATA}"/>
+                        <p:calendar  size="5" id="calendarComp1" value="#{compararGastosMB.dataGasto}" required="true" requiredMessage="#{mens.MENSAGEM_CAMPO_OBRIGATORIO}"/>
                         <p:spacer height="30"/>
-                        <p:outputLabel id="campoData2" value="Selecione a data 2 : * "/>
-                        <p:calendar  size="5" id="calendarComp2" value="#{compararGastosMB.data_2}" required="true"/>
+                        <p:outputLabel id="Data2" value="#{mens.SELECIONE_DATA}"/>
+                        <p:calendar  size="5" id="calendarComp2" value="#{compararGastosMB.dataGasto_2}" required="true" requiredMessage="#{mens.MENSAGEM_CAMPO_OBRIGATORIO}"/>
                         <p:spacer height="30"/>
-                        <p:commandButton ajax="false"  value="Carregar" action="#{compararGastosMB.balanco_1()}" />
+                        <br/>
+                        <br/>
+                        <p:commandButton id="botaoMes" ajax="false"  value="Comparar" action="#{compararGastosMB.selecionarGastos()}" />
+                        <br/>
                         <br/>
                     </center>
-                <p:fieldset legend="BALANÇO 1" >
-                    <br/>
-                    <h:form id="Balanco_1">
+                </h:form>
 
-                        <p:dataTable   id="tabela_Ativo" var="a" emptyMessage="Não forão carregadas as receitas " value="#{compararGastosMB.listaAtivo_1}">
-                            <f:facet name="header">  
-                                <h:outputText value="ATIVO" /> 
+                <h:form>
+                    <p:dataTable   id="gastos" var="p" emptyMessage="#{mens.MSG_TABELA_DESPESA}" value="#{compararGastosMB.listaGastos}">
+                        <f:facet name="header">  
+                            <h:outputText value="#{mens.DESPESAS}" /> 
+                        </f:facet>
+
+                        <p:column >
+                            <f:facet name="header">
+                                <h:outputText value="#{mens.DESPESAS}" />
+                            </f:facet>
+                            <h:outputText value="${p.descricao}"/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{mens.RS}" />
                             </f:facet>
 
-                            <p:column >
-                                <f:facet name="header">
-                                    <h:outputText value=" Receitas " />
-                                </f:facet>
-                                <h:outputText value=" Venda ${a.id}"/>
-                            </p:column>
+                            <h:outputText value="${p.valor}"/>
 
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value=" R$ " />
-                                </f:facet>
+                        </p:column>
 
-                                <h:outputText value="${a.totalDaVenda}"/>
-
-                            </p:column>
-
-                        </p:dataTable>
-
-                    </h:form>
-                    <p:panel >
-                        <br/>
-                        <h:outputText value="Total Ativo  ........................................................................................................... "/>
-                        <h:outputText value="R$ #{compararGastosMB.totalAtivo}"/>
-
-                    </p:panel>
-
-                    <br/>
-                    <h:form>
-
-                        <p:dataTable   id="tabela_Passivo" var="p" emptyMessage="Não forão carregadas as despesas " value="#{compararGastosMB.listaPasivo_1}">
-                            <f:facet name="header">  
-                                <h:outputText value="PASSIVO" /> 
-                            </f:facet>
-
-                            <p:column >
-                                <f:facet name="header">
-                                    <h:outputText value=" Despesas " />
-                                </f:facet>
-                                <h:outputText value="${p.descricao}"/>
-                            </p:column>
-
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value=" R$ " />
-                                </f:facet>
-
-                                <h:outputText value="${p.valor}"/>
-
-                            </p:column>
-
-                        </p:dataTable>
-
-                        <p:panel >
-                            <br/>
-                            <h:outputText value="Total Passivo  ........................................................................................................ "/>
-                            <h:outputText value="R$ #{compararGastosMB.totalPassivo}"/>
-
-                        </p:panel>
-
-                    </h:form>
-                    <br/>
-                    <p:panel header="PATRIMÔMIO LÍQUIDO DO MÊS" >
-                        <br/>
-                        <h:outputText value="Total P.L. "/>
-                        <h:outputText id="PL_1" value="R$ #{compararGastosMB.getpL_1()}"/>
-
-                    </p:panel>
-                </p:fieldset>
+                    </p:dataTable>
+                </h:form>
                 <br/>
-                <p:fieldset  legend="BALANÇO 2" >
-                    <h:form id="Balanco_2">
-                        <p:dataTable   id="tabela_Ativ" var="a" emptyMessage="Não forão carregadas as receitas " value="#{compararGastosMB.listaAtivo_2}">
-                            <f:facet name="header">  
-                                <h:outputText value="ATIVO" /> 
+                <h:outputText value="Total  ........................................................................................................... "/>
+                <h:outputText value="#{mens.RS} #{compararGastosMB.total_1}"/>
+                <br/>
+                <br/>
+                <h:form>
+                    <p:dataTable   id="gastos_2" var="p" emptyMessage="#{mens.MSG_TABELA_DESPESA}" value="#{compararGastosMB.listaGastos_2}">
+                        <f:facet name="header">  
+                            <h:outputText value="#{mens.DESPESAS}" /> 
+                        </f:facet>
+
+                        <p:column >
+                            <f:facet name="header">
+                                <h:outputText value="#{mens.DESPESAS}" />
+                            </f:facet>
+                            <h:outputText value="${p.descricao}"/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{mens.RS}" />
                             </f:facet>
 
-                            <p:column >
-                                <f:facet name="header">
-                                    <h:outputText value=" Receitas " />
-                                </f:facet>
-                                <h:outputText value=" Venda ${a.id}"/>
-                            </p:column>
+                            <h:outputText value="${p.valor}"/>
 
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value=" R$ " />
-                                </f:facet>
+                        </p:column>
 
-                                <h:outputText value="${a.totalDaVenda}"/>
-
-                            </p:column>
-
-                        </p:dataTable>
-
-                    </h:form>
-                    <p:panel >
-                        <br/>
-                        <h:outputText value="Total Ativo  ........................................................................................................... "/>
-                        <h:outputText value="R$ #{compararGastosMB.totalAtivo_2}"/>
-
-                    </p:panel>
-
+                    </p:dataTable>
                     <br/>
-                    <h:form>
-
-                        <p:dataTable   id="tabela_Pass" var="p" emptyMessage="Não forão carregadas as despesas " value="#{compararGastosMB.listaPasivo_2}">
-                            <f:facet name="header">  
-                                <h:outputText value="PASSIVO" /> 
-                            </f:facet>
-
-                            <p:column >
-                                <f:facet name="header">
-                                    <h:outputText value=" Despesas " />
-                                </f:facet>
-                                <h:outputText value="${p.descricao}"/>
-                            </p:column>
-
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value=" R$ " />
-                                </f:facet>
-
-                                <h:outputText value="${p.valor}"/>
-
-                            </p:column>
-
-                        </p:dataTable>
-
-                        <p:panel >
-                            <br/>
-                            <h:outputText value="Total Passivo  ........................................................................................................ "/>
-                            <h:outputText value="R$ #{compararGastosMB.totalPassivo_2}"/>
-
-                        </p:panel>
-
-                    </h:form>
+                    <h:outputText value="Total  ........................................................................................................... "/>
+                    <h:outputText value="#{mens.RS} #{compararGastosMB.total_2}"/>
                     <br/>
-                    <p:panel header="PATRIMÔMIO LÍQUIDO DO MÊS" >
-                        <br/>
-                        <h:outputText value="Total P.L. "/>
-                        <h:outputText id="PL_2" value="R$ #{compararGastosMB.getpL_2()}"/>
+                    <br/>
+                </h:form>
 
-                    </p:panel>
+                <h:form>
 
-                </p:fieldset>
+                    <p:barChart id="horizontal" value="#{compararGastosMB.categoryModel}" legendPosition="se" style="height:300px"  
+                                title="Gráfico de comparação" orientation="horizontal" min="0" max="3500"/>  
+                </h:form>
+
             </p:panel>
-
         </h:form>
         <br/>
         <hr></hr>
         <br/>
         <h:form id="linguagem" >
             <center>
-                <h:commandLink value="#{mensagemMB.carregarMensagemDeArquivo(mens.LINK_VOLTAR_PAGINA)}" action="faces/BemVindo.xhtml" onclick="#{despesaMB.limapMsg()}" transient="true"/>
+                <h:commandLink value="#{mensagemMB.carregarMensagemDeArquivo(mens.LINK_VOLTAR_PAGINA)}" action="faces/BemVindo.xhtml" transient="true"/>
             </center>
             <br/>
             <center>
@@ -196,7 +112,6 @@
                 <td> <h:commandButton image="/imagem/EUA.png" action="#{localeController.inglesLocale}"/></td>
             </center>
         </h:form> 
-
 
     </h:body>
 </html>

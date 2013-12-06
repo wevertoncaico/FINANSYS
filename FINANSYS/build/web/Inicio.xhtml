@@ -23,15 +23,15 @@
                     <h:form id="login">
 
                         <h:panelGrid columns="2" cellpadding="5">
-                            <p:outputLabel for="username" value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_USUARIO)} " />
-                            <h:inputText id="username"  label="username" />
+                            <p:outputLabel for="username" value="#{mens.LABEL_USUARIO} " />
+                            <h:inputText id="username"  label="username" value="#{loginMB.login}" required="true" requiredMessage="#{mens.MENSAGEM_CAMPO_OBRIGATORIO}"/>
 
-                            <p:outputLabel for="password" value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_SENHAOB)} " />
-                            <h:inputSecret id="password" label="password" />
+                            <p:outputLabel for="password" value="#{mens.LABEL_SENHAOB} " />
+                            <h:inputSecret id="password" label="password" value="#{loginMB.senha}" required="true" requiredMessage="#{mens.MENSAGEM_CAMPO_OBRIGATORIO}"/>
 
                             <f:facet name="footer" >
                                 <center>
-                                    <p:commandButton id="loginButton" value="#{mensagemMB.carregarMensagemDeArquivo(mens.BOTAO_ENTRE)}" action="faces/BemVindo.xhtml" update="login" image="ui-icon-check" ajax="false" />
+                                    <p:commandButton id="loginButton" value="#{mens.BOTAO_ENTRE}" action="#{loginMB.logar()}" update="login" image="ui-icon-check" ajax="false" />
                                 </center>
                             </f:facet>
                         </h:panelGrid>

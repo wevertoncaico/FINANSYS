@@ -52,6 +52,7 @@ public class DespesaJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            despesa.setDataF(despesa.getDat());
             despesa = em.merge(despesa);
             em.getTransaction().commit();
         } catch (Exception ex) {

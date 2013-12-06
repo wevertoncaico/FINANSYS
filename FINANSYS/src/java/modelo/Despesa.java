@@ -29,6 +29,7 @@ public class Despesa implements Serializable {
     private Date dat;
     private String dataF;
     private SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
+    private String status;
   
     
     public Long getId() {
@@ -51,8 +52,11 @@ public class Despesa implements Serializable {
         return valor;
     }
 
-    public void setValor(Double valor) {
-        this.valor = valor;
+    /**
+     * @return the status
+     */
+    public String getStatus() {
+        return status;
     }
 
     /**
@@ -68,6 +72,32 @@ public class Despesa implements Serializable {
     public void setDat(Date dat) {
         this.dat = dat;
     }
+    
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setValor(Double valor) {
+        this.valor = valor;
+    }
+    
+    /**
+     * @return the dataF
+     */
+    public String getDataF() {
+        return dataF;
+    }
+
+    /**
+     * @param dataF the dataF to set
+     */
+    public void setDataF(Date d) {
+        dataF = formatador.format(d);
+    }
+
 
     @Override
     public int hashCode() {
@@ -93,19 +123,4 @@ public class Despesa implements Serializable {
     public String toString() {
         return "modelo.Despesa[ id=" + id + " ]";
     }
-
-    /**
-     * @return the dataF
-     */
-    public String getDataF() {
-        return dataF;
-    }
-
-    /**
-     * @param dataF the dataF to set
-     */
-    public void setDataF(Date d) {
-        dataF = formatador.format(d);
-    }
-
 }

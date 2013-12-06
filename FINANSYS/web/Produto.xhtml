@@ -65,6 +65,25 @@
             <p:commandButton value="#{mensagemMB.carregarMensagemDeArquivo(mens.BOTAO_LIMPAR)}" action="#{produtoMB.limpar()}" ajax="false"/>
         </h:form>
 
+         <p:panel id="formPanelPesquisa" header="#{mensagemMB.carregarMensagemDeArquivo(mens.TITULO_PRODUTO_PESQUISA)}">
+            <h:form id="formPesquisa">
+
+                <h:panelGrid columns="3">
+                    <h:outputLabel value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_NOMEOB)}"/>
+                    <p:inputText size="40" id="nomeDoProd" style="text-transform: lowercase" maxlength="30" value ="#{produtoMB.pesquisa}" required="true" requiredMessage="#{mensagemMB.carregarMensagemDeArquivo(mens.MENSAGEM_CAMPO_OBRIGATORIO)}"/>
+                    <p:message for="nomeDoProd"/>
+                </h:panelGrid>
+                <p:commandButton ajax="false" value="#{mensagemMB.carregarMensagemDeArquivo(mens.BOTAO_PESQUISAR)}" action="#{produtoMB.pesquisarNome()}" image="ui-icon-search" update="formPesquisa, :tabelaProd, :formCadProdutos"/>
+            </h:form> 
+            <br/>
+            <h:form>
+                <p:commandButton ajax="false" value="#{mensagemMB.carregarMensagemDeArquivo(mens.BOTAO_PESQUISAR_TUDO)}" action="#{produtoMB.pesquisarAll()}" image="ui-icon-search" update="formPesquisa, :tabelaProd, :formCadProdutos"/>
+            </h:form>
+
+        </p:panel>
+        
+        
+        
         <h:form id="tabelaProd">
             <p:dataTable id="dataTable" var="p" emptyMessage="#{mensagemMB.carregarMensagemDeArquivo(mens.MENSAGEM_TABELA_PRODUTO)}" value="#{produtoMB.listaProduto}" paginator="true" rows="5"  
                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  

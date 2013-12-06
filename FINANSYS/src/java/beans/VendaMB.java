@@ -9,7 +9,10 @@ import modelo.Item;
 import modelo.Venda;
 import java.util.List;
 import dao.VendaJpaController;
+import dao.exceptions.NonexistentEntityException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -22,15 +25,16 @@ public class VendaMB {
     private Produto p = new Produto();
     private Venda v = new Venda();
     private Item i = new Item();
-    private boolean mostrarTotalVenda = false;
-    private boolean mostrarMensagemSucesso = false;
-    private boolean estoqueZero = false; 
-    private VendaJpaController daoVenda = new VendaJpaController(EMF.getEntityManagerFactory());
     private ProdutoJpaController daoProduto = new ProdutoJpaController(EMF.getEntityManagerFactory());
-    private List<Produto> listaVenda = new ArrayList(); // lista de produtos que já esta add a venda, no momento
+    private VendaJpaController daoVenda = new VendaJpaController(EMF.getEntityManagerFactory());
+    private List<Produto> listaVenda = new ArrayList<Produto>(); // lista de produtos que já esta add a venda, no momento
+    private List<Produto> produtosBaixaEstoque = new ArrayList<Produto>();
     private Integer quan = 0;// guarda quantidade de itens selecionados pelo usuário
     private Double total = 0.0; // armazena total da venda, enquanto ela não é finalizada
     private Integer estoqueProd = 0; // armazena estoque atual do produto
+    private boolean mostrarTotalVenda = false;
+    private boolean mostrarMensagemSucesso = false;
+    private boolean estoqueZero = false;
 
     public VendaMB() {
     }
@@ -120,6 +124,20 @@ public class VendaMB {
     }
 
     /**
+     * @return the produtosBaixaEstoque
+     */
+    public List<Produto> getProdutosBaixaEstoque() {
+        return produtosBaixaEstoque;
+    }
+
+    /**
+     * @param produtosBaixaEstoque the produtosBaixaEstoque to set
+     */
+    public void setProdutosBaixaEstoque(List<Produto> produtosBaixaEstoque) {
+        this.produtosBaixaEstoque = produtosBaixaEstoque;
+    }
+
+    /**
      * @return the quan
      */
     public Integer getQuan() {
@@ -181,7 +199,7 @@ public class VendaMB {
             setEstoqueZero(true);
         } else {
 
-            
+
             i.setQuantidade(quan);
             i.setProduto(getP());
             vendaAtual(getP());
@@ -208,12 +226,14 @@ public class VendaMB {
         v.setItens(new ArrayList<Item>());
         setListaVenda(new ArrayList<Produto>());
         setTotal(0.0);
+        setProdutosBaixaEstoque(new ArrayList<Produto>());
 
     }
 
     public void finalizarCompra() {
 
         daoVenda.create(v);
+        gravarEstoqueAtual();
         p = new Produto();
         mostrarTotalVenda = false;
         v = new Venda();
@@ -222,6 +242,7 @@ public class VendaMB {
         setEstoqueZero(false);
         setTotal(0.0);
         setListaVenda(new ArrayList<Produto>());
+        setProdutosBaixaEstoque(new ArrayList<Produto>());
 
     }
 
@@ -240,6 +261,8 @@ public class VendaMB {
 
         p.setQntEstoque(estoqueProd);
 
+        produtosBaixaEstoque.add(p);
+
     }
 
     public void vendaAtual(Produto prod) {
@@ -247,4 +270,21 @@ public class VendaMB {
         listaVenda.add(prod);
 
     }
+
+    public void gravarEstoqueAtual(){
+
+        for (Produto prod : getProdutosBaixaEstoque()) {
+            try {
+                
+                daoProduto.edit(prod);
+                
+            } catch (NonexistentEntityException ex) {
+                Logger.getLogger(VendaMB.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(VendaMB.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    
 }

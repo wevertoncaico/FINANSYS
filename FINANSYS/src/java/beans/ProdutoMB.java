@@ -363,7 +363,7 @@ public class ProdutoMB {
         limpaMsg();
     }
 
-    public void PesquisarPorNome() {
+    public void pesquisarPorNome() {
         //listaProduto = dao.pesquisarPorNome(pesquisa);
     }
 
@@ -378,5 +378,17 @@ public class ProdutoMB {
         setMostarProAltErros(false);
         setMostarProExcluir(false);
         setMostarProExcErros(false);
+    }
+
+    public void pesquisarNome() {
+
+        listaProduto = new ArrayList<Produto>();
+        for (Produto pr : dao.findProdutoEntities()) {
+            if ((pr.getNome().toLowerCase().contains(pesquisa))) {
+                listaProduto.add(pr);
+            }
+
+        }
+        setPesquisa("");
     }
 }

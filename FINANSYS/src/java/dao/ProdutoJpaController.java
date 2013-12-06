@@ -134,14 +134,6 @@ public class ProdutoJpaController implements Serializable {
             em.close();
         }
     }
-    /* public List<Produto> pesquisarPorNome(String nome) {
-        EntityManager em = getEntityManager();
-
-        TypedQuery<Produto> q;
      
-        q = em.createQuery("select p from Produto p where p.nome like :nome",Produto.class);
-        q.setParameter("nome", "%" + nome + "%");
-        
-        return q.getResultList();
-    }*/
+     
 }

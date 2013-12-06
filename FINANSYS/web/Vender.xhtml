@@ -67,7 +67,7 @@
             </center>
             <br/>
             <center>
-                <h:outputText value="#{vendaMB.p.nome} .............................  R$#{vendaMB.p.preco} "/> 
+                <h:outputText value="#{vendaMB.p.nome} .............................  #{mensagemMB.carregarMensagemDeArquivo(mens.RS)} #{vendaMB.p.preco} "/> 
                 <br/>
                 <h:form> 
                     <h:outputLabel id="qua" value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_QUANTIDADE)} "/>

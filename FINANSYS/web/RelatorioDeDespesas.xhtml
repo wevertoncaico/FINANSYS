@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Relatório de Despesas</title>
+        <link rel="stylesheet" type="text/css" href="arquivo_css/css.css" />
+        <p:growl id="growl" showSummary="false" showDetail="true"/>
+    </h:head>
+    <h:body>
+        <form>
+            <p:layout fullPage="true">  
+
+                <p:layoutUnit position="north" size="183" resizable="true">  
+                    <center>
+                        <p:graphicImage value="/imagem/FINANSYS2.png"/>
+                    </center>
+                </p:layoutUnit> 
+            </p:layout>
+            
+            <p:layoutUnit position="center">
+                <h:form>                   
+                    <p:dataTable id="dataTable" var="d" emptyMessage="Qual relatório deseja consultar?" value="#{statusMB.despesasPgOrNPg}" paginator="true" rows="5"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15,20,25,30,35">
+                        <f:facet name="header">
+                            <h:outputText value="Relatório de Despesas"/>
+                        </f:facet>
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{mens.LABEL_ID}"/>                                
+                            </f:facet>
+                            <p:commandLink value="#{d.id}">
+                                <f:setPropertyActionListener value="#{d}" target="#{statusMB.d}"/>
+                            </p:commandLink>
+                        </p:column>
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{mens.LABEL_DESCRICAO}"/>
+                            </f:facet>
+                            <p:commandLink value="#{d.descricao}">
+                                <f:setPropertyActionListener value="#{d}" target="#{statusMB.d}"/>
+                            </p:commandLink>
+                        </p:column>
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{mens.LABEL_DATA}"/>
+                            </f:facet>
+                            <p:commandLink value="${d.dataF}">
+                                <f:setPropertyActionListener value="#{d}" target="#{statusMB.d}"/>
+                            </p:commandLink>                                
+                        </p:column>
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{mens.LABEL_VALOR}"/>
+                            </f:facet>
+                            <p:commandLink value="#{d.valor}">
+                                <f:setPropertyActionListener value="#{d}" target="#{statusMB.d}"/>
+                            </p:commandLink>
+                        </p:column>
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{mens.LABEL_STATUS}"/>
+                            </f:facet>
+                            <p:commandLink value="#{d.status}">
+                                <f:setPropertyActionListener value="#{d}" target="#{statusMB.d}"/>
+                            </p:commandLink>
+                        </p:column>
+                    </p:dataTable>
+                    <br/>
+                    <h:form>
+                        <center>
+                            <p:commandButton id="BotaoPaga" value="#{mens.BOTAO_PAGA}"  ajax="false" actionListener="#{statusMB.mostrarDespesasPagas}"/>
+                            <p:commandButton id="BotaoNaoPaga" value="#{mens.BOTAO_NAO_PAGAS}" ajax="false" actionListener="#{statusMB.mostrarDespesasNaoPagas}"/>
+                        </center>
+                    </h:form>
+                </h:form>
+            </p:layoutUnit>
+            
+            <p:layoutUnit position="south" size="80"  resizable="true" >  
+                <h:form id="linguagem" >
+                     <center>
+                        <h:commandLink value="#{mensagemMB.carregarMensagemDeArquivo(mens.LINK_VOLTAR_PAGINA)}" action="faces/BemVindo.xhtml" onclick="#{despesaMB.limapMsg()}"/>
+                     </center>
+                    <br/>
+                    <center>                  
+                       <td> <h:commandButton image="/imagem/Brasil.png" action="#{localeController.portugueseLocale}"/></td>
+                       <td> <h:commandButton image="/imagem/EUA.png" action="#{localeController.inglesLocale}"/></td>
+                    </center>
+               </h:form> 
+           </p:layoutUnit> 
+        </form>
+    </h:body>
+</html>
+
+

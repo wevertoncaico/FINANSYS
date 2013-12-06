@@ -1,15 +1,15 @@
 package beans;
 
 import dao.DespesaJpaController;
-import dao.VendaJpaController;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import modelo.Despesa;
-import modelo.Venda;
 import util.EMF;
+import org.primefaces.model.chart.CartesianChartModel;
+import org.primefaces.model.chart.ChartSeries;
 
 /**
  *
@@ -19,38 +19,21 @@ import util.EMF;
 @RequestScoped
 public class CompararGastosMB {
 
-    private DespesaJpaController daoDespesa = new DespesaJpaController(EMF.getEntityManagerFactory());
-    private VendaJpaController daoVenda = new VendaJpaController(EMF.getEntityManagerFactory());
-    private Venda venda = new Venda();
     private Despesa despesa = new Despesa();
-    private List<Despesa> listaPasivo_1 = new ArrayList<Despesa>();
-    private List<Despesa> listaPasivo_2 = new ArrayList<Despesa>();
-    private List<Venda> listaAtivo_1 = new ArrayList<Venda>();
-    private List<Venda> listaAtivo_2 = new ArrayList<Venda>();
-    private Date data_1; //data carregada no primeiro painel
-    private Date data_2; //data carregada no segundo painel
-    private Double pL_1 = 0.0; //Patrimônio liquido do primeiro painel
-    private Double pL_2 = 0.0; //Patrimônio liquido do segundo painel
-    private Double totalAtivo = 0.0;
-    private Double totalPassivo = 0.0;
-    private Double totalAtivo_2 = 0.0;
-    private Double totalPassivo_2 = 0.0;
-    
+    private Despesa d = new Despesa();
+    private Despesa despesaComp1 = new Despesa(); // variavel que guarda a despesa para comparar no gráfico
+    private Despesa desComp2 = new Despesa();// variavel que guarda a despesa para comparar no gráfico
+    private List<Despesa> listaGastos = new ArrayList<Despesa>();
+    private List<Despesa> listaGastos_2 = new ArrayList<Despesa>();
+    private DespesaJpaController daoDespesa = new DespesaJpaController(EMF.getEntityManagerFactory());
+    private Date dataGasto; // primeira data selecionada pelo usuario
+    private Date dataGasto_2; // segunda data selecionada pelo usuario
+    private Double total_1 = 0.0; // total das despesas no 1 mês
+    private Double total_2 = 0.0; // total das despesas no 2 mês
+    private CartesianChartModel categoryModel; // tipo cartesiano para criar gráfico
+
     public CompararGastosMB() {
-    }
-
-    /**
-     * @return the venda
-     */
-    public Venda getVenda() {
-        return venda;
-    }
-
-    /**
-     * @param venda the venda to set
-     */
-    public void setVenda(Venda venda) {
-        this.venda = venda;
+        criarGraficos(0.0, 0.0, 0.0, 0.0); // inicialização necessária do gráfico
     }
 
     /**
@@ -68,227 +51,208 @@ public class CompararGastosMB {
     }
 
     /**
-     * @return the data_1
+     * @return the d
      */
-    public Date getData_1() {
-        return data_1;
+    public Despesa getD() {
+        return d;
     }
 
     /**
-     * @param data_1 the data_1 to set
+     * @param d the d to set
      */
-    public void setData_1(Date data_1) {
-        this.data_1 = data_1;
+    public void setD(Despesa d) {
+        this.d = d;
     }
 
     /**
-     * @return the data_2
+     * @return the listaGastos
      */
-    public Date getData_2() {
-        return data_2;
+    public List<Despesa> getListaGastos() {
+        return listaGastos;
     }
 
     /**
-     * @param data_2 the data_2 to set
+     * @param listaGastos the listaGastos to set
      */
-    public void setData_2(Date data_2) {
-        this.data_2 = data_2;
+    public void setListaGastos(List<Despesa> listaGastos) {
+        this.listaGastos = listaGastos;
     }
 
     /**
-     * @return the listaPasivo_1
+     * @return the listaGastos_2
      */
-    public List<Despesa> getListaPasivo_1() {
-        return listaPasivo_1;
+    public List<Despesa> getListaGastos_2() {
+        return listaGastos_2;
     }
 
     /**
-     * @param listaPasivo_1 the listaPasivo_1 to set
+     * @param listaGastos_2 the listaGastos_2 to set
      */
-    public void setListaPasivo_1(List<Despesa> listaPasivo_1) {
-        this.listaPasivo_1 = listaPasivo_1;
+    public void setListaGastos_2(List<Despesa> listaGastos_2) {
+        this.listaGastos_2 = listaGastos_2;
     }
 
     /**
-     * @return the listaAtivo_2
+     * @return the dataGasto
      */
-    public List<Venda> getListaAtivo_2() {
-        return listaAtivo_2;
+    public Date getDataGasto() {
+        return dataGasto;
     }
 
     /**
-     * @param listaAtivo_2 the listaAtivo_2 to set
+     * @param dataGasto the dataGasto to set
      */
-    public void setListaAtivo_2(List<Venda> listaAtivo_2) {
-        this.listaAtivo_2 = listaAtivo_2;
+    public void setDataGasto(Date dataGasto) {
+        this.dataGasto = dataGasto;
     }
 
     /**
-     * @return the listaPasivo_2
+     * @return the dataGasto_2
      */
-    public List<Despesa> getListaPasivo_2() {
-        return listaPasivo_2;
+    public Date getDataGasto_2() {
+        return dataGasto_2;
     }
 
     /**
-     * @param listaPasivo_2 the listaPasivo_2 to set
+     * @param dataGasto_2 the dataGasto_2 to set
      */
-    public void setListaPasivo_2(List<Despesa> listaPasivo_2) {
-        this.listaPasivo_2 = listaPasivo_2;
+    public void setDataGasto_2(Date dataGasto_2) {
+        this.dataGasto_2 = dataGasto_2;
     }
 
     /**
-     * @return the listaAtivo_1
+     * @return the total_1
      */
-    public List<Venda> getListaAtivo_1() {
-        return listaAtivo_1;
+    public Double getTotal_1() {
+        return total_1;
     }
 
     /**
-     * @param listaAtivo_1 the listaAtivo_1 to set
+     * @param total_1 the total_1 to set
      */
-    public void setListaAtivo_1(List<Venda> listaAtivo_1) {
-        this.listaAtivo_1 = listaAtivo_1;
+    public void setTotal_1(Double total_1) {
+        this.total_1 = total_1;
     }
 
     /**
-     * @return the pL_1
+     * @return the total_2
      */
-    public Double getpL_1() {
-        return pL_1;
+    public Double getTotal_2() {
+        return total_2;
     }
 
     /**
-     * @param pL_1 the pL_1 to set
+     * @param total_2 the total_2 to set
      */
-    public void setpL_1(Double pL_1) {
-        this.pL_1 = pL_1;
+    public void setTotal_2(Double total_2) {
+        this.total_2 = total_2;
     }
 
-    /**
-     * @return the pL_2
-     */
-    public Double getpL_2() {
-        return pL_2;
+    public CartesianChartModel getCategoryModel() {
+        return categoryModel;
     }
 
-    /**
-     * @param pL_2 the pL_2 to set
-     */
-    public void setpL_2(Double pL_2) {
-        this.pL_2 = pL_2;
+    public void selecionarGastos() {
+
+        listaGastos = new ArrayList<Despesa>();
+        listaGastos_2 = new ArrayList<Despesa>();
+        total_1 = 0.0;
+        total_2 = 0.0;
+
+        for (Despesa des : daoDespesa.findDespesaEntities()) {
+            if (des.getDat().getYear() == getDataGasto().getYear()) {
+                if (des.getDat().getMonth() == getDataGasto().getMonth()) {
+                    listaGastos.add(des);
+                }
+            }
+        }
+        for (Despesa des : daoDespesa.findDespesaEntities()) {
+            if (des.getDat().getYear() == getDataGasto_2().getYear()) {
+                if (des.getDat().getMonth() == getDataGasto_2().getMonth()) {
+                    listaGastos_2.add(des);
+                }
+            }
+        }
+
+        compararGastos();
     }
 
-    /**
-     * @return the totalAtivo
-     */
-    public Double getTotalAtivo() {
-        return totalAtivo;
-    }
+    public void compararGastos() {
 
-    /**
-     * @param totalAtivo the totalAtivo to set
-     */
-    public void setTotalAtivo(Double totalAtivo) {
-        this.totalAtivo = totalAtivo;
-    }
+        Double valor1 = 0.0;
+        Double valor2 = 0.0;
+        Double valor3 = 0.0;
+        Double valor4 = 0.0;
 
-    /**
-     * @return the totalpassivo
-     */
-    public Double getTotalPassivo() {
-        return totalPassivo;
-    }
+        for (Despesa des : getListaGastos()) {
+            total_1 += des.getValor();
+            if (des.getValor() > valor1) {
 
-    /**
-     * @param totalpassivo the totalpassivo to set
-     */
-    public void setTotalPassivo(Double totalPassivo) {
-        this.totalPassivo = totalPassivo;
-    }
-    
-    /**
-     * @return the totalAtivo_2
-     */
-    public Double getTotalAtivo_2() {
-        return totalAtivo_2;
-    }
-
-    /**
-     * @param totalAtivo_2 the totalAtivo_2 to set
-     */
-    public void setTotalAtivo_2(Double totalAtivo_2) {
-        this.totalAtivo_2 = totalAtivo_2;
-    }
-
-    /**
-     * @return the totalpassivo_2
-     */
-    public Double getTotalPassivo_2() {
-        return totalPassivo_2;
-    }
-
-    /**
-     * @param totalpassivo_2 the totalpassivo_2 to set
-     */
-    public void setTotalPassivo_2(Double totalPassivo_2) {
-        this.totalPassivo_2 = totalPassivo_2;
-    }
-
-    public void balanco_1() {
-        
-        listaPasivo_1 = new ArrayList<Despesa>();
-        listaPasivo_2 = new ArrayList<Despesa>();
-        listaAtivo_1 = new ArrayList<Venda>();
-        listaAtivo_2 = new ArrayList<Venda>();
-
-        for (Despesa d : daoDespesa.findDespesaEntities()) {
-            if(d.getDat().getMonth() == getData_1().getMonth()){    
-                    
-                listaPasivo_1.add(d);
-            }else if(d.getDat().getMonth() == getData_2().getMonth()){
-              
-                listaPasivo_2.add(d);
-                
+                valor1 = des.getValor();
+                despesa = des;
             }
 
         }
-        for (Venda v : daoVenda.findVendaEntities()) {
-            if(v.getDataVenda().getMonth() == getData_1().getMonth()){
-                listaAtivo_1.add(v);
-            }else if(v.getDataVenda().getMonth() == getData_2().getMonth()){
-                listaAtivo_2.add(v);
+        for (Despesa des : getListaGastos_2()) {
+            total_2 += des.getValor();
+            if (des.getValor() > valor2) {
+
+                valor2 = des.getValor();
+                d = des;
             }
         }
-        patrimonioLiquido();
+        for (Despesa des : getListaGastos_2()) {
 
+            if (des.getDescricao().equals(despesa.getDescricao())) {
+                desComp2 = des;
+                valor4 = des.getValor();
+            }
+
+        }
+
+        for (Despesa des : getListaGastos()) {
+
+            if (des.getDescricao().equals(d.getDescricao())) {
+                despesaComp1 = des;
+                valor3 = des.getValor();
+            }
+
+        }
+
+
+        criarGraficos(valor1, valor2, valor3, valor4);
     }
 
-    public void patrimonioLiquido() {
+    public void criarGraficos(Double valor1, Double valor2, Double valor3, Double valor4) {
 
-        totalAtivo = 0.0;
-        totalPassivo = 0.0;
-        totalAtivo_2 = 0.0;
-        totalPassivo_2 = 0.0;
-        
-        for (Venda vend : getListaAtivo_1()) {
-            totalAtivo += vend.getTotalDaVenda();
-        }
-        for (Despesa desp : getListaPasivo_1()) {
-            totalPassivo += desp.getValor();
-        }
+        categoryModel = new CartesianChartModel();
 
-        pL_1 = getTotalAtivo() - getTotalPassivo();
+        ChartSeries despesaMes_1 = new ChartSeries();
+        despesaMes_1.setLabel("Maior despesa no mês 1: " + despesa.getDescricao());
+        ChartSeries despesaMes_2 = new ChartSeries();
+        despesaMes_2.setLabel("Maior despesa no mês 2:" + d.getDescricao());
+        ChartSeries despesaTotal_1 = new ChartSeries();
+        despesaTotal_1.setLabel("Total das despesas mês 1");
+        ChartSeries despesaTotal_2 = new ChartSeries();
+        despesaTotal_2.setLabel("Total das despesas mês 2");
+        ChartSeries despesaCompara_1 = new ChartSeries();
+        despesaCompara_1.setLabel(desComp2.getDescricao() + " No mês 1");
+        ChartSeries despesaCompara_2 = new ChartSeries();
+        despesaCompara_2.setLabel(despesaComp1.getDescricao() + " No mês 2");
 
-        for (Venda vend : getListaAtivo_2()) {
-            totalAtivo_2 += vend.getTotalDaVenda();
-        }
-        for (Despesa desp : getListaPasivo_2()) {
-            totalPassivo_2 += desp.getValor();
-        }
+        despesaTotal_1.set("", total_1);
+        despesaTotal_2.set("", total_2);
+        despesaMes_1.set("", valor1);
+        despesaMes_2.set("", valor2);
+        despesaCompara_1.set("", valor3);
+        despesaCompara_2.set("", valor4);
 
-        pL_2 = getTotalAtivo_2() - getTotalPassivo_2();
 
+        categoryModel.addSeries(despesaMes_1);
+        categoryModel.addSeries(despesaMes_2);
+        categoryModel.addSeries(despesaTotal_1);
+        categoryModel.addSeries(despesaTotal_2);
+        categoryModel.addSeries(despesaCompara_1);
+        categoryModel.addSeries(despesaCompara_2);
     }
-
 }

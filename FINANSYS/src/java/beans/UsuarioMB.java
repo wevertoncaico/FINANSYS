@@ -23,7 +23,7 @@ public class UsuarioMB {
 
     private Usuario u = new Usuario();
     private UsuarioJpaController dao = new UsuarioJpaController(EMF.getEntityManagerFactory());
-    private List<Usuario> listaUsuario;
+    private List<Usuario> listaUsuario = new ArrayList<Usuario>();
     private String pesquisa;
     private Integer validador = 0;
     private boolean mostrarMsgCadastrado = false;

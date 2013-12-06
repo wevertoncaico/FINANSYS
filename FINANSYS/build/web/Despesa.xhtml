@@ -48,6 +48,15 @@
 
                     </p:calendar>
                     <p:message for="campoData"/>
+                    
+                    <h:outputText value="Status"/>
+                    <p:selectOneMenu value="#{despesaMB.d.status}">
+                    
+                        <f:selectItem itemLabel="#{mensagemMB.carregarMensagemDeArquivo(mens.MENSAGEM_PAGA)}" itemValue="#{mens.MENSAGEM_PAGA}"/>
+                        <f:selectItem itemLabel="#{mensagemMB.carregarMensagemDeArquivo(mens.MENSAGEM_NAO_PAGA)}" itemValue="#{mens.MENSAGEM_NAO_PAGA}"/>
+                        
+                    </p:selectOneMenu>                    
+                    
                 </h:panelGrid>
 
                 <br/>
@@ -130,6 +139,7 @@
                         <h:outputText value="${d.dataF}"/>
                     </p:commandLink>
                 </p:column>
+                
                 <p:column >  
                     <f:facet name="header">
                         <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_VALOR)}" />   
@@ -137,6 +147,16 @@
                     <p:commandLink id="TabValor" ajax="false" value="#{d.valor}" update=":formCadDespesas">
                         <f:setPropertyActionListener value="#{d}" target="#{despesaMB.d}"/> 
                         <h:outputText value="${d.valor}"/>
+                    </p:commandLink>
+                </p:column>
+                
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{mensagemMB.carregarMensagemDeArquivo(mens.LABEL_STATUS)}"/>
+                    </f:facet>
+                    <p:commandLink id="tabStatus" ajax="false" value="#{d.status}" update=":formCadDespesas">
+                        <f:setPropertyActionListener value="#{d}" target="#{despesaMB.d}"/>
+                        <h:outputText value="${d.status}"/>
                     </p:commandLink>
                 </p:column>
 
@@ -154,7 +174,7 @@
         <br/>
         <h:form id="linguagem" >
             <center>
-                <h:commandLink value="#{mensagemMB.carregarMensagemDeArquivo(mens.LINK_VOLTAR_PAGINA)}" action="faces/BemVindo.xhtml" onclick="#{despesaMB.limapMsg()}" transient="true"/>
+                <h:commandLink value="#{mensagemMB.carregarMensagemDeArquivo(mens.LINK_VOLTAR_PAGINA)}" action="faces/BemVindo.xhtml" onclick="#{despesaMB.limapMsg()}"/>
             </center>
             <br/>
             <center>
