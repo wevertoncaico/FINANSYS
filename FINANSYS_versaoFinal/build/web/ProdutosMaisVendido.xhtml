@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Produtos mais vendidos</title>
+    </h:head>
+    <h:body>
+
+        <center>
+            <p:graphicImage value="/imagem/FINANSYS2.png"/>
+        </center>
+        <h:form></h:form>
+
+        <p:panel id="cosulta" header="#{mens.TITULO_PAINEL_MAIS_VENDIDOS}">
+            <br/>
+            <h:form id="tabelaOrd">
+
+                <p:dataTable id="maisVendidos" value="#{maisVendidosMB.listaMaisVendidos}" var="p" emptyMessage="#{mens.MENSAGEM_TABELA_MAIS_VENDIDOS}" paginator="true" rows="10"  
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                             rowsPerPageTemplate="10,15,20,25,30,35,40,45">
+                    <f:facet name="header">  
+                        <h:outputText value=" #{mens.TITULO_TABELA_MAIS_VENDIDOS}"/> 
+                    </f:facet> 
+
+                    <p:column headerText="#{mens.LABEL_PRODUTO}">
+                        <h:outputText value="#{p.nome}"/>
+                    </p:column>
+                    <p:column sortBy="#{p.totalItens}" headerText="#{mens.LABEL_QUANTIDADE_VENDIDA}">
+                        <h:outputText value="#{p.totalItens}"/>
+                    </p:column>
+                </p:dataTable>
+
+            </h:form>
+
+        </p:panel>   
+        <br/>
+        <hr></hr>
+        <br/>
+        <h:form id="linguagem" >
+            <center>
+                <h:commandLink value="#{mensagemMB.carregarMensagemDeArquivo(mens.LINK_VOLTAR_PAGINA)}" action="faces/BemVindo.xhtml" onclick="#{despesaMB.limapMsg()}" />
+            </center>
+            <br/>
+            <center>
+                <td> <h:commandButton image="/imagem/Brasil.png" action="#{localeController.portugueseLocale}"/></td>
+                <td> <h:commandButton image="/imagem/EUA.png" action="#{localeController.inglesLocale}"/></td>
+            </center>
+        </h:form> 
+    </h:body>
+</html>

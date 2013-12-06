@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Bem Vindo</title>
+    </h:head>
+    <h:body>
+        <form>
+
+            <p:layout fullPage="true">  
+
+                <p:layoutUnit position="north" size="183" resizable="true">  
+                    <center>
+                        <p:graphicImage value="/imagem/FINANSYS2.png"/>
+                    </center>
+                </p:layoutUnit>  
+
+                <p:layoutUnit position="west" size="345" header="#{mensagemMB.carregarMensagemDeArquivo(mens.TITULO_PAINEL_MENU)}" resizable="true"  >  
+                    <h:form >
+                        <p:menu style="width:290px">
+                            <p:menuitem value=" #{mensagemMB.carregarMensagemDeArquivo(mens.PAGINA_USUARIO)}" ajax="false" url="Usuario.xhtml" icon="ui-icon" /> 
+                            <br/>
+                            <p:menuitem value=" #{mensagemMB.carregarMensagemDeArquivo(mens.PAGINA_DESPESA)}"  ajax="false" url="Despesa.xhtml" icon="ui-icon" />  
+                            <br/>
+                            <p:menuitem value=" #{mensagemMB.carregarMensagemDeArquivo(mens.PAGINA_PRODUTO)}"  ajax="false" url="Produto.xhtml" icon="ui-icon" /> 
+                            <br/>
+                            <p:menuitem value=" #{mensagemMB.carregarMensagemDeArquivo(mens.PAGINA_VENDER)}"  ajax="false" url="Vender.xhtml" icon="ui-icon"/>  
+                            <br/>
+                            <p:menuitem value="#{mensagemMB.carregarMensagemDeArquivo(mens.PAGINA_RELATORIO)}" ajax="false" url="RelatorioDeDespesas.xhtml" icon="ui-icon"/>
+                            <br/>
+                            <p:menuitem value="#{mensagemMB.carregarMensagemDeArquivo(mens.PAGINA_MAIS_VENDIDOS)}" ajax="false" url="ProdutosMaisVendido.xhtml" icon="ui-icon"/>
+                            <br/>
+                            <p:menuitem value="#{mensagemMB.carregarMensagemDeArquivo(mens.CONSULTAR_BALANCO)}"  ajax="false" url="Balanco.xhtml" icon="ui-icon"/>  
+                            <br/>
+                            <p:menuitem value="#{mensagemMB.carregarMensagemDeArquivo(mens.PAGINA_COMPARAR_GASTOS)}" ajax="false" url="CompararGastos.xhtml" icon="ui-icon" />  
+                            <br/>
+                            <p:menuitem value="#{mensagemMB.carregarMensagemDeArquivo(mens.PAGINA_SALDO_ANUAL)}" ajax="false" url="SaldoEmCaixa.xhtml" icon="ui-icon" />  
+                        </p:menu>  
+                    </h:form>
+                    <h:form>
+                        <p:menu style="width:290px">
+                            <p:menuitem id="sair" action="#{loginMB.deslogarUsuario()}" value=" #{mensagemMB.carregarMensagemDeArquivo(mens.PAGINA_SAIR)}" icon="ui-icon"/>
+                        </p:menu>
+                    </h:form>
+                </p:layoutUnit>  
+
+                <p:layoutUnit position="center" >  
+                    <h:form> 
+
+                        <center>
+                            <p:graphicImage value="/imagem/padeiro.png" height="270" width="267"/>
+                        </center>
+
+                    </h:form>  
+                </p:layoutUnit>  
+
+                <p:layoutUnit position="south" size="75"  resizable="true" >  
+                    <h:form id="linguagem" >
+                        <center>
+                            <br/>
+                            <td> <h:commandButton image="/imagem/Brasil.png" action="#{localeController.portugueseLocale}"/></td>
+                            <td> <h:commandButton image="/imagem/EUA.png" action="#{localeController.inglesLocale}"/></td>
+                        </center>
+                    </h:form> 
+                </p:layoutUnit>  
+
+            </p:layout>  
+
+        </form>
+
+    </h:body>
+</html>
+
+             
